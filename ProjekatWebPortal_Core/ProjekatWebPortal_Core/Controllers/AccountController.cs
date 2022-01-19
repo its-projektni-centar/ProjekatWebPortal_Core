@@ -3,50 +3,54 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ProjekatWebPortal_Core.Models;
+using ProjekatWebPortal_Core.Data;
 
 namespace ProjekatWebPortal_Core.Controllers
 {
     public class AccountController : Controller
     {
+        private ApplicationDbContext _ApplicationDbContext;
+
         /*private IMaterijalContext context;
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;*/
 
-       /* public AccountController()
-        {
-            context = new MaterijalContext();
-        }
+         public AccountController(ApplicationDbContext applicationDbContext)
+         {
+            _ApplicationDbContext = applicationDbContext;
+         }
+        /*
+         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+         {
+             UserManager = userManager;
+             SignInManager = signInManager;
+         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
-        {
-            UserManager = userManager;
-            SignInManager = signInManager;
-        }
+         public ApplicationSignInManager SignInManager
+         {
+             get
+             {
+                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+             }
+             private set
+             {
+                 _signInManager = value;
+             }
+         }
 
-        public ApplicationSignInManager SignInManager
-        {
-            get
-            {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
-            }
-            private set
-            {
-                _signInManager = value;
-            }
-        }
-
-        public ApplicationUserManager UserManager
-        {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
-        }
-       */
+         public ApplicationUserManager UserManager
+         {
+             get
+             {
+                 return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+             }
+             private set
+             {
+                 _userManager = value;
+             }
+         }
+        */
         //
         // GET: /Account/Login
 
@@ -181,49 +185,49 @@ namespace ProjekatWebPortal_Core.Controllers
         /*[Authorize(Roles = "SuperAdministrator,Administrator")]*/
         public async Task<ActionResult> Register()
         {
-           /* RegisterViewModel ViewModel = new RegisterViewModel
+            RegisterViewModel ViewModel = new RegisterViewModel
             {
-                Skole = context.skole.ToList(),
-                Smerovi = context.smerovi.ToList()
+                Skole = _ApplicationDbContext.Skola.ToList()/*,
+                Smerovi = context.smerovi.ToList()*/
             };
+            /*
+                MaterijalContext matcont = new MaterijalContext();
 
-            MaterijalContext matcont = new MaterijalContext();
+                ViewModel.Smerovi = matcont.smerovi.ToList();
 
-            ViewModel.Smerovi = matcont.smerovi.ToList();
-
-            if (User.IsInRole("Administrator"))
-            {
-                SkolaModel s = await ApplicationUser.vratiSkoluModel(User.Identity.Name) ?? new SkolaModel { NazivSkole = "Undefined", IdSkole = 0, Skraceno = "Undefined" };
-                ViewModel.Skole = new List<SkolaModel> { s };
-                ViewModel.Uloge = matcont.Roles.Where(x => x.Name != "Administrator" && x.Name != "SuperAdministrator").ToList();
-            }
-            else
-            {
-                //novo
-
-                try
+                if (User.IsInRole("Administrator"))
                 {
-                    var skId = ViewModel.Skole.ToList()[0].IdSkole;
-                    if (!this.User.IsInRole("SuperAdministrator"))
-                    {
-                        SkolaModel sk = await ApplicationUser.vratiSkoluModel(User.Identity.Name);
-                        if (sk.IdSkole > 0)
-                        {
-                            skId = sk.IdSkole;
-                        }
-                    }
-                    var smeroviPoSkoli = context.smeroviPoSkolama.Where(x => x.skolaId == skId).Select(x => x.smerId).ToList();
-                    ViewModel.SmeroviPoSkolama = context.smerovi.Where(x => smeroviPoSkoli.Contains(x.smerId)).ToList();
+                    SkolaModel s = await ApplicationUser.vratiSkoluModel(User.Identity.Name) ?? new SkolaModel { NazivSkole = "Undefined", IdSkole = 0, Skraceno = "Undefined" };
+                    ViewModel.Skole = new List<SkolaModel> { s };
+                    ViewModel.Uloge = matcont.Roles.Where(x => x.Name != "Administrator" && x.Name != "SuperAdministrator").ToList();
                 }
-                catch (ArgumentOutOfRangeException) { return new HttpNotFoundResult("Nema unetih smerova"); }
+                else
+                {
+                    //novo
+
+                    try
+                    {
+                        var skId = ViewModel.Skole.ToList()[0].IdSkole;
+                        if (!this.User.IsInRole("SuperAdministrator"))
+                        {
+                            SkolaModel sk = await ApplicationUser.vratiSkoluModel(User.Identity.Name);
+                            if (sk.IdSkole > 0)
+                            {
+                                skId = sk.IdSkole;
+                            }
+                        }
+                        var smeroviPoSkoli = context.smeroviPoSkolama.Where(x => x.skolaId == skId).Select(x => x.smerId).ToList();
+                        ViewModel.SmeroviPoSkolama = context.smerovi.Where(x => smeroviPoSkoli.Contains(x.smerId)).ToList();
+                    }
+                    catch (ArgumentOutOfRangeException) { return new HttpNotFoundResult("Nema unetih smerova"); }
 
 
-                //kraj novog
-                ViewModel.Skole = matcont.Skole.ToList();
-                ViewModel.Uloge = matcont.Roles.ToList();
+                    //kraj novog
+                    ViewModel.Skole = matcont.Skole.ToList();
+                    ViewModel.Uloge = matcont.Roles.ToList();
 
-            }*/
-            return View(/*ViewModel*/);
+                }*/
+            return View(ViewModel);
 
         }
         /// <summary>

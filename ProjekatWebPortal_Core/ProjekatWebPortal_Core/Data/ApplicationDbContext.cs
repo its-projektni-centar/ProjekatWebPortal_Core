@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using ProjekatWebPortal_Core.Models;
 
 namespace ProjekatWebPortal_Core.Data
 {
@@ -12,5 +13,9 @@ namespace ProjekatWebPortal_Core.Data
             : base(options)
         {
         }
+
+        public DbSet<SkolaModel> Skola { get; set; }
+
+
     }
 }
