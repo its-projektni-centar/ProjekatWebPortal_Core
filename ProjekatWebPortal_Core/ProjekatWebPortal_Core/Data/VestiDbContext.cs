@@ -4,7 +4,7 @@ using ProjekatWebPortal_Core.Models;
 
 namespace ProjekatWebPortal_Core.Data
 {
-    public class VestiDbContext : IdentityDbContext
+    public class VestiDbContext : DbContext
     {
         public VestiDbContext(DbContextOptions<VestiDbContext> options)
             : base(options)

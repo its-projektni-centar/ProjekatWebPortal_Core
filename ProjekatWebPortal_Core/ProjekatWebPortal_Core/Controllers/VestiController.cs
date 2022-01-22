@@ -128,7 +128,7 @@ namespace ProjekatWebPortal_Core.Controllers
                 path = Path.Combine(contentRootPath, "wwwroot/Content/Uploads/Thumbnails/", fileId + ekstenzija);
 
                 string pathzaserver = "/Content/Uploads/Thumbnails/" + fileId + ekstenzija;
-                Fajl.Write(path);
+                //Fajl.Write(path);
                 Vest.Thumbnail = pathzaserver;
             }
             _context.Vesti.Add(Vest);
@@ -182,7 +182,9 @@ namespace ProjekatWebPortal_Core.Controllers
             }
             if (ZaBrisanje != null)
             {
-                string Thumbnail = Server.MapPath(ZaBrisanje.Thumbnail);
+                string pathThumbnail = "";
+                pathThumbnail = Path.Combine(ZaBrisanje.Thumbnail);
+                string Thumbnail = pathThumbnail;
                 if (System.IO.File.Exists(Thumbnail))
                 {
                     System.IO.File.Delete(Thumbnail);
