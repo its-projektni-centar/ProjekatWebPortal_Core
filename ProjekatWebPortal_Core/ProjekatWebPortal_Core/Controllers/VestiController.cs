@@ -131,7 +131,11 @@ namespace ProjekatWebPortal_Core.Controllers
                 {
                     Directory.CreateDirectory(path);
                 }
-                
+                using (var fileStream = new FileStream(path, FileMode.Append))
+                {
+
+                    Fajl.CopyTo(fileStream);
+                }
 
                 //Fajl.Write(path);
                 Vest.Thumbnail = pathzaserver;
