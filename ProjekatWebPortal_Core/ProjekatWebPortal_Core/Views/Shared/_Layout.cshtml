@@ -323,7 +323,7 @@
                         </li>
                     }
                 </ul>
-            }
+            }*@
 
             <ul class="ListaNav" id="n3">
                 <li class="naslov">
@@ -340,8 +340,8 @@
                         <p id="l5">Pregled vesti</p>
                     </a>
                 </li>
-                @if (this.User.IsInRole("LokalniUrednik") || this.User.IsInRole("SuperAdministrator"))
-                {
+                @*@if (this.User.IsInRole("LokalniUrednik") || this.User.IsInRole("SuperAdministrator"))*@
+                @*{*@
                     <li class="blok">
                         <a href="@Url.Action("NovaVest", "Vesti")">
                             <div class="slikaLi">
@@ -350,8 +350,8 @@
                             <p id="l6">Nova vest</p>
                         </a>
                     </li>
-                }
-            </ul>*@
+                @*}*@
+            </ul>
     </div>
     @*}
         else
