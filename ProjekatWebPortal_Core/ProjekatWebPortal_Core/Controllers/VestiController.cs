@@ -26,13 +26,13 @@ namespace ProjekatWebPortal_Core.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
-        public IActionResult Index()
+        //TEST ZA PATH
+        public IActionResult Index(string fileId, string ekstenzija)
         {
             string webRootPath = _webHostEnvironment.WebRootPath;
             string contentRootPath = _webHostEnvironment.ContentRootPath;
             string path = "";
             path = Path.Combine(webRootPath, "Content/Konfiguracija/", "MojaKonfiguracija.xml");
-
             return Content(path);
         }
 
@@ -46,7 +46,6 @@ namespace ProjekatWebPortal_Core.Controllers
             XDocument xmlFajl = null;
             try
             {
-                
                 //xmlFajl = XDocument.Load(Server.MapPath("~/Content/Konfiguracija/MojaKonfiguracija.xml")); - UKINITO.
                 xmlFajl = XDocument.Load(path); // Ucitaj XML fajl
             }
@@ -107,7 +106,7 @@ namespace ProjekatWebPortal_Core.Controllers
 
 
         /*Instead of HttpFileBase, you've to use IFormFile from Microsoft.AspNetCore.Http (install NuGet package if you haven't.)*/
-        //[ValidateInput(false)] - MVC
+        //[ValidateInput(false)] - MVC old
         [HttpPost]
         //[Authorize(Roles = "SuperAdministrator,LokalniUrednik")] - IDENTITY
         public IActionResult SnimiVest(IFormFile Fajl, DodajVestViewModel vm) //HttpPostedFileBase ?
@@ -125,9 +124,15 @@ namespace ProjekatWebPortal_Core.Controllers
                 string webRootPath = _webHostEnvironment.WebRootPath;
                 string contentRootPath = _webHostEnvironment.ContentRootPath;
                 string path = "";
-                path = Path.Combine(contentRootPath, "wwwroot/Content/Uploads/Thumbnails/", fileId + ekstenzija);
-
+                path = Path.Combine(webRootPath, "/Content/Uploads/Thumbnails/", fileId + ekstenzija);
                 string pathzaserver = "/Content/Uploads/Thumbnails/" + fileId + ekstenzija;
+
+                if(!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+                
+
                 //Fajl.Write(path);
                 Vest.Thumbnail = pathzaserver;
             }
