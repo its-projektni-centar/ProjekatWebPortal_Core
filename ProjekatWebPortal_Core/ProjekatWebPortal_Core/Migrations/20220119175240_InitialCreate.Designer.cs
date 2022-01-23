@@ -9,7 +9,7 @@ using ProjekatWebPortal_Core.Data;
 
 namespace ProjekatWebPortal_Core.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(UsersDbContext))]
     [Migration("20220119175240_InitialCreate")]
     partial class InitialCreate
     {

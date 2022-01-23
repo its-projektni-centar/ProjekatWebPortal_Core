@@ -32,7 +32,7 @@ namespace ProjekatWebPortal_Core
 
             // entity framework core - linq
             // pristup bazi
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<UsersDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
@@ -45,7 +45,7 @@ namespace ProjekatWebPortal_Core
 
             // identity framework core - logovanje, registracija
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<UsersDbContext>();
             services.AddControllersWithViews();
         }
 

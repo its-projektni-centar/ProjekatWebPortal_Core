@@ -10,13 +10,13 @@ namespace ProjekatWebPortal_Core.Controllers
 {
     public class AccountController : Controller
     {
-        private ApplicationDbContext _ApplicationDbContext;
+        private UsersDbContext _ApplicationDbContext;
 
         /*private IMaterijalContext context;
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;*/
 
-         public AccountController(ApplicationDbContext applicationDbContext)
+         public AccountController(UsersDbContext applicationDbContext)
          {
             _ApplicationDbContext = applicationDbContext;
          }
@@ -187,7 +187,7 @@ namespace ProjekatWebPortal_Core.Controllers
         {
             RegisterViewModel ViewModel = new RegisterViewModel
             {
-                Skole = _ApplicationDbContext.Skola.ToList()/*,
+                /*Skole = _ApplicationDbContext.Skola.ToList()/*,
                 Smerovi = context.smerovi.ToList()*/
             };
             /*

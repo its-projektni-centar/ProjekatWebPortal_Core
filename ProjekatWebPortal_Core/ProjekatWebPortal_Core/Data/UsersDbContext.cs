@@ -7,14 +7,12 @@ using ProjekatWebPortal_Core.Models;
 
 namespace ProjekatWebPortal_Core.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class UsersDbContext : IdentityDbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public UsersDbContext(DbContextOptions<UsersDbContext> options)
             : base(options)
         {
         }
-
-        public DbSet<SkolaModel> Skola { get; set; }
 
 
     }
