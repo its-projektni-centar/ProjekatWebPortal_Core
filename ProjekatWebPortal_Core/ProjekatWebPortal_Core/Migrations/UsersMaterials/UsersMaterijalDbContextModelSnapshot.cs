@@ -3,17 +3,15 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjekatWebPortal_Core.Data;
 
-namespace ProjekatWebPortal_Core.Migrations.UsersMigrations
+namespace ProjekatWebPortal_Core.Migrations.UsersMaterials
 {
-    [DbContext(typeof(UsersDbContext))]
-    [Migration("20220123143049_UsersInit")]
-    partial class UsersInit
+    [DbContext(typeof(UsersMaterijalDbContext))]
+    partial class UsersMaterijalDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

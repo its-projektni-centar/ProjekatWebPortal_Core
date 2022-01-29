@@ -5,20 +5,24 @@ using System.Linq;
 using System.Threading.Tasks;
 using ProjekatWebPortal_Core.Models;
 using ProjekatWebPortal_Core.Data;
+using ProjekatWebPortal_Core.Models;
 
 namespace ProjekatWebPortal_Core.Controllers
 {
     public class AccountController : Controller
     {
-        private UsersDbContext _ApplicationDbContext;
+        private UsersMaterijalDbContext _ApplicationDbContext;
+
+        private UsersMaterijalDbContext _usersMaterijalContext; 
 
         /*private IMaterijalContext context;
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;*/
 
-         public AccountController(UsersDbContext applicationDbContext)
+         public AccountController(UsersMaterijalDbContext applicationDbContext, UsersMaterijalDbContext umdbc)
          {
             _ApplicationDbContext = applicationDbContext;
+            _usersMaterijalContext = umdbc;
          }
         /*
          public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
@@ -227,7 +231,16 @@ namespace ProjekatWebPortal_Core.Controllers
                     ViewModel.Uloge = matcont.Roles.ToList();
 
                 }*/
-            return View(ViewModel);
+           /* List<Dummy> dummies = _usersMaterijalContext.dummyTabela.ToList();*/
+
+            /*string foo = "";
+
+            foreach(var element in dummies)
+            {
+                foo += element.ID + " " + element.Ime + " " + element.Prezime + "\n";
+            }*/
+
+            return View(/*ViewModel*/);
 
         }
         /// <summary>

@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace ProjekatWebPortal_Core.Migrations
+namespace ProjekatWebPortal_Core.Migrations.UsersMaterials
 {
-    public partial class InitialCreate : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -44,20 +44,6 @@ namespace ProjekatWebPortal_Core.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-            ///////////////////////SKOLA///////////////////////////////
-            migrationBuilder.CreateTable(
-                name: "Skola",
-                columns: table => new
-                {
-                    IdSkole = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    NazivSkole = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Skraceno = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Skola", x => x.IdSkole);
                 });
 
             migrationBuilder.CreateTable(
@@ -222,9 +208,6 @@ namespace ProjekatWebPortal_Core.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
-
-            migrationBuilder.DropTable(
-                name: "Skola");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
