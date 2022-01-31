@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 /*using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;*/
@@ -69,11 +70,11 @@ namespace ProjekatWebPortal_Core.Models
 
     public class RegisterViewModel
     {
-        //public IEnumerable<SmerModel> Smerovi { get; set; }
-       // public IEnumerable<IdentityRole> Uloge { get; set; }
+        public IEnumerable<SmerModel> Smerovi { get; set; }
+        public IEnumerable<IdentityRole> Uloge { get; set; }
         public IEnumerable<SkolaModel> Skole { get; set; }
 
-      /*  public IEnumerable<StrucnaSpremaModel> StrucneSpreme { get; set; }
+        public IEnumerable<StrucnaSpremaModel> StrucneSpreme { get; set; }
 
         public List<SmerModel> SmeroviPoSkolama { get; set; }
         public int SelektovanaSkola { get; set; }
@@ -97,7 +98,7 @@ namespace ProjekatWebPortal_Core.Models
         public string Ime { get; set; }
         [Required(ErrorMessage = "Morate uneti prezime!")]
         public string Prezime { get; set; }
-        */
+        
 
         
         

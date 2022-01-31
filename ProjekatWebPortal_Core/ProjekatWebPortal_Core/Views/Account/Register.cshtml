@@ -18,9 +18,9 @@
     <h2 style="margin-left:20px;">@ViewBag.Title</h2>
 
 
-    @*using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @name = "forma", @id = "noviKorisnik", @class = "form-horizontal", role = "form", @enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @name = "forma", @id = "noviKorisnik", @class = "form-horizontal", role = "form", @enctype = "multipart/form-data" }))
     {
-        @*Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()
 
             <h4>Napravite novi nalog</h4>
             <hr />
@@ -43,13 +43,11 @@
 
             @Html.LabelFor(m => m.phoneNumber, new { @class = "matDesignLabel" })
             @Html.TextBoxFor(m => m.phoneNumber, new { @class = "korisnikTB" })
+     }
 
-        *@
 
 
-        @*Html.ValidationMessageFor(m => m.phoneNumber, "", new { @class = "text-danger" })*@
-
-        @******************
+        @*Html.ValidationMessageFor(m => m.phoneNumber, "", new { @class = "text-danger" })
             <div id="godina">
                 @Html.LabelFor(m => m.GodinaUpisa, new { @class = "matDesignLabel" })
                 @Html.TextBoxFor(m => m.GodinaUpisa, new { @class = "korisnikTB" })
@@ -62,12 +60,10 @@
             @Html.DropDownListFor(m => m.SelektovanaSkola, new SelectList(Model.Skole, "IdSkole", "NazivSkole"), new { @class = "skole izgledDropdown", @id = "'" + @Model.skolaId + "'" })
         </div>
 
-        @*  }
-            @*  else
+          }  else
               {
                   <p>Novom korisniku ce automatski biti dodeljena skola:<br /> @Model.Skole.First().NazivSkole</p>
-              }*@
-        @*
+              }
                     </div>
 
                     <div class="noviKorisnikDD">
@@ -99,7 +95,7 @@
 
                 }
             </div>
-        *@
+        
         @section Scripts {
 
             <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
