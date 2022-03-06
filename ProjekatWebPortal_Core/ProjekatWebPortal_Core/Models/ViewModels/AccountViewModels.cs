@@ -16,10 +16,10 @@ namespace ProjekatWebPortal_Core.Models
     //    public string Email { get; set; }
     //}
 
-    //public class ExternalLoginListViewModel
-    //{
-    //    public string ReturnUrl { get; set; }
-    //}
+    public class ExternalLoginListViewModel
+    {
+        public string ReturnUrl { get; set; }
+    }
 
     //public class SendCodeViewModel
     //{
@@ -52,21 +52,21 @@ namespace ProjekatWebPortal_Core.Models
     //    public string Email { get; set; }
     //}
 
-    //public class LoginViewModel
-    //{
-        
-    //    [Display(Name = "Korisnicko ime")]
-    //    [Required(ErrorMessage ="Morate uneti korisnicko ime!")]
-    //    public string Username { get; set; }
+    public class LoginViewModel
+    {
 
-    //    [Required(ErrorMessage ="Morate uneti sifru!")]
-    //    [DataType(DataType.Password)]
-    //    [Display(Name = "Password")]
-    //    public string Password { get; set; }
+        [Display(Name = "Korisnicko ime")]
+        [Required(ErrorMessage = "Morate uneti korisnicko ime!")]
+        public string Username { get; set; }
 
-    //    [Display(Name = "zapamti me?")]
-    //    public bool RememberMe { get; set; }
-    //}
+        [Required(ErrorMessage = "Morate uneti sifru!")]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password")]
+        public string Password { get; set; }
+
+        [Display(Name = "zapamti me?")]
+        public bool RememberMe { get; set; }
+    }
 
     public class RegisterViewModel
     {
