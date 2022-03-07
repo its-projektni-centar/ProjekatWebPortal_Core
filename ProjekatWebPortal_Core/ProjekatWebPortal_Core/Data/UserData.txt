@@ -1,0 +1,70 @@
+INSERT [dbo].[AspNetRoles] ([Id], [Name]) VALUES (N'1', N'Administrator')
+INSERT [dbo].[AspNetRoles] ([Id], [Name]) VALUES (N'6', N'GlobalniUrednik')
+INSERT [dbo].[AspNetRoles] ([Id], [Name]) VALUES (N'2', N'LokalniUrednik')
+INSERT [dbo].[AspNetRoles] ([Id], [Name]) VALUES (N'3', N'Profesor')
+INSERT [dbo].[AspNetRoles] ([Id], [Name]) VALUES (N'5', N'SuperAdministrator')
+INSERT [dbo].[AspNetRoles] ([Id], [Name]) VALUES (N'4', N'Ucenik')
+
+INSERT [dbo].[AspNetUsers] ([Id], [Ime], [Prezime], [Slika], [SkolaId], [GodinaUpisa], [SmerId], [Uloga], [UserName], [NormalizedUserName], [Email], [NormalizedEmail], [EmailConfirmed], [PasswordHash], [SecurityStamp], [ConcurrencyStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEnd], [LockoutEnabled], [AccessFailedCount]) VALUES (N'62c3c838-39e8-4327-b6fb-f8a5d269d606', N'IME', N'PREZIME', NULL, NULL, NULL, 1, N'superadministrator', N'superadministrator', N'SUPERADMINISTRATOR', N'MEJJLL', N'MEJJLL', 1, N'AQAAAAEAACcQAAAAEOLYK8NuyKfpdY0wL/Hz/7VqBvBuvWQm3Ihv2kNLZRxXpPos515p1Hrh6uPh8/RSyg==', N'V24FEJROSDOF7ULO4GNLCHXMHJ7O4QSF', N'44d5c71d-5f23-49a7-ae70-f046d132a007', N'123456897', 0, 0, NULL, 1, 0)
+INSERT [dbo].[AspNetUsers] ([Id], [Ime], [Prezime], [Slika], [SkolaId], [GodinaUpisa], [SmerId], [Uloga], [UserName], [NormalizedUserName], [Email], [NormalizedEmail], [EmailConfirmed], [PasswordHash], [SecurityStamp], [ConcurrencyStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEnd], [LockoutEnabled], [AccessFailedCount]) VALUES (N'abca1208-81e0-456a-9aa2-bbeef7d1c53e', N'IME', N'PREZIME', NULL, NULL, NULL, 1, N'administrator', N'admin', N'ADMIN', N'MEJJLL', N'MEJJLL', 1, N'AQAAAAEAACcQAAAAEJcY4exsQf3Jqk2HA0ik8i9bbTyJKmND33iQ5y/Baogl5WpDDInPFbUqs89QQIGX2g==', N'T3WB2MJEUUWDFA3DPXW63LAOY7BQF7JN', N'373b4e68-adab-4f3c-86a6-61b4dc053f67', N'123456897', 0, 0, NULL, 1, 0)
+INSERT [dbo].[AspNetUsers] ([Id], [Ime], [Prezime], [Slika], [SkolaId], [GodinaUpisa], [SmerId], [Uloga], [UserName], [NormalizedUserName], [Email], [NormalizedEmail], [EmailConfirmed], [PasswordHash], [SecurityStamp], [ConcurrencyStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEnd], [LockoutEnabled], [AccessFailedCount]) VALUES (N'c405d369-0c53-4dec-91af-109facc6baab', N'IME', N'PREZIME', NULL, NULL, NULL, 1, N'ucenik', N'ucenik', N'UCENIK', N'MEJJLL', N'MEJJLL', 1, N'AQAAAAEAACcQAAAAEBtpEKgEciuFkK1zPNezgCSXPWWTg79EzJCXc4UYQHv0Td9XJxRQMX4MYV5lJ6Yn4Q==', N'KAJOVUNEEWBVZAURTTXMZPUXW5X2Y5BZ', N'954e732a-2523-47d4-ac29-6601a123956c', N'123456897', 0, 0, NULL, 1, 0)
+INSERT [dbo].[AspNetUsers] ([Id], [Ime], [Prezime], [Slika], [SkolaId], [GodinaUpisa], [SmerId], [Uloga], [UserName], [NormalizedUserName], [Email], [NormalizedEmail], [EmailConfirmed], [PasswordHash], [SecurityStamp], [ConcurrencyStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEnd], [LockoutEnabled], [AccessFailedCount]) VALUES (N'f66ccfeb-0ea1-4d7a-9a4a-f8c0e81534b0', N'IME', N'PREZIME', NULL, NULL, NULL, 1, N'urednik', N'urednik', N'UREDNIK', N'MEJJLL', N'MEJJLL', 1, N'AQAAAAEAACcQAAAAECHwRBeMwoeIqBr6E8v4Yy9t5JEv7NwmYtsoxQTF53tgwxLe8hEdMRVgh4He2jmqmw==', N'T4FOEV4Y22GITX3C2PU2U6QUUXHQNDQP', N'00784644-9bb6-4eeb-a514-b6e1c01a3c3b', N'123456897', 0, 0, NULL, 1, 0)
+INSERT [dbo].[AspNetUsers] ([Id], [Ime], [Prezime], [Slika], [SkolaId], [GodinaUpisa], [SmerId], [Uloga], [UserName], [NormalizedUserName], [Email], [NormalizedEmail], [EmailConfirmed], [PasswordHash], [SecurityStamp], [ConcurrencyStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEnd], [LockoutEnabled], [AccessFailedCount]) VALUES (N'f819dbc1-6bc1-4983-8929-801cf5cab03b', N'IME', N'PREZIME', NULL, NULL, NULL, 1, N'globalniurednik', N'globalniurednik', N'GLOBALNIUREDNIK', N'MEJJLL', N'MEJJLL', 1, N'AQAAAAEAACcQAAAAEBTlS5pcV4Xglhbh5jwO6LiYa5b539URmmMM3UhLf5pNdb6FMCKQ46GQLYRtvOXiiQ==', N'EA43QXS23S63DCDRVEADNLKDU6PPRXYD', N'2fe6419c-d5bd-4e4f-8ef3-8d1aff96cc88', N'123456897', 0, 0, NULL, 1, 0)
+INSERT [dbo].[AspNetUsers] ([Id], [Ime], [Prezime], [Slika], [SkolaId], [GodinaUpisa], [SmerId], [Uloga], [UserName], [NormalizedUserName], [Email], [NormalizedEmail], [EmailConfirmed], [PasswordHash], [SecurityStamp], [ConcurrencyStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEnd], [LockoutEnabled], [AccessFailedCount]) VALUES (N'f9c08eed-ead3-4aca-89f8-0af5515da6d9', N'IME', N'PREZIME', NULL, NULL, NULL, 1, N'profesor', N'profesor', N'PROFESOR', N'MEJJLL', N'MEJJLL', 1, N'AQAAAAEAACcQAAAAEEh5SzvLn9apc27bPDL8VqHNo6M+zp4/OK0Zjd9bfzC7HuckaVuRByQX7F27OHXmJg==', N'D3KWRGW2NGVZ2EE6C57Z6FAXFPW64MUQ', N'd0869753-5cd2-4b9a-8950-6c3725b2cc62', N'123456897', 0, 0, NULL, 1, 0)
+
+
+INSERT [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES (N'abca1208-81e0-456a-9aa2-bbeef7d1c53e', N'1')
+INSERT [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES (N'f66ccfeb-0ea1-4d7a-9a4a-f8c0e81534b0', N'2')
+INSERT [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES (N'f9c08eed-ead3-4aca-89f8-0af5515da6d9', N'3')
+INSERT [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES (N'c405d369-0c53-4dec-91af-109facc6baab', N'4')
+INSERT [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES (N'62c3c838-39e8-4327-b6fb-f8a5d269d606', N'5')
+INSERT [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES (N'f819dbc1-6bc1-4983-8929-801cf5cab03b', N'6')
+
+SET IDENTITY_INSERT [dbo].[Skola] ON 
+
+INSERT [dbo].[Skola] ([IdSkole], [NazivSkole], [Skraceno]) VALUES (1, N'Information Technology High School', N'ITHS')
+INSERT [dbo].[Skola] ([IdSkole], [NazivSkole], [Skraceno]) VALUES (2, N'Nikola Tesla', N'NiTe')
+INSERT [dbo].[Skola] ([IdSkole], [NazivSkole], [Skraceno]) VALUES (3, N'Mihajlo Pupin', N'MihP')
+SET IDENTITY_INSERT [dbo].[Skola] OFF
+
+SET IDENTITY_INSERT [dbo].[Smer] ON 
+
+INSERT [dbo].[Smer] ([smerId], [smerNaziv], [smerOpis], [smerSkraceno], [nazivFajlIts], [nazivFajlNs], [nazivFajlMs], [fajlIts], [fileMimeTypeIts], [fileEkstenzijaIts], [fajlNs], [fileMimeTypeNs], [fileEkstenzijaNs], [fajlMs], [fileMimeTypeMs], [fileEkstenzijaMs]) VALUES (1, N'Smer 1', N'Smer 1', N'S1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Smer] ([smerId], [smerNaziv], [smerOpis], [smerSkraceno], [nazivFajlIts], [nazivFajlNs], [nazivFajlMs], [fajlIts], [fileMimeTypeIts], [fileEkstenzijaIts], [fajlNs], [fileMimeTypeNs], [fileEkstenzijaNs], [fajlMs], [fileMimeTypeMs], [fileEkstenzijaMs]) VALUES (2, N'Smer 2', N'Smer 2', N'S2', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Smer] ([smerId], [smerNaziv], [smerOpis], [smerSkraceno], [nazivFajlIts], [nazivFajlNs], [nazivFajlMs], [fajlIts], [fileMimeTypeIts], [fileEkstenzijaIts], [fajlNs], [fileMimeTypeNs], [fileEkstenzijaNs], [fajlMs], [fileMimeTypeMs], [fileEkstenzijaMs]) VALUES (3, N'Smer 3', N'Smer 3', N'S3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+INSERT [dbo].[Smer] ([smerId], [smerNaziv], [smerOpis], [smerSkraceno], [nazivFajlIts], [nazivFajlNs], [nazivFajlMs], [fajlIts], [fileMimeTypeIts], [fileEkstenzijaIts], [fajlNs], [fileMimeTypeNs], [fileEkstenzijaNs], [fajlMs], [fileMimeTypeMs], [fileEkstenzijaMs]) VALUES (4, N'Smer 4', N'Smer 4', N'S4', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+
+SET IDENTITY_INSERT [dbo].[Smer] OFF
+
+SET IDENTITY_INSERT [dbo].[tipPredmeta] ON 
+
+INSERT [dbo].[tipPredmeta] ([tipId], [tipNaziv]) VALUES (1, N'lokalni')
+INSERT [dbo].[tipPredmeta] ([tipId], [tipNaziv]) VALUES (2, N'globalni')
+
+
+SET IDENTITY_INSERT [dbo].[tipPredmeta] OFF
+
+
+
+SET IDENTITY_INSERT [dbo].[tipMaterijala] ON 
+
+INSERT [dbo].[tipMaterijala] ([tipMaterijalId], [nazivTipMaterijal]) VALUES (1, N'Materijal sa vezbi')
+INSERT [dbo].[tipMaterijala] ([tipMaterijalId], [nazivTipMaterijal]) VALUES (2, N'Materijal sa predavanja')
+INSERT [dbo].[tipMaterijala] ([tipMaterijalId], [nazivTipMaterijal]) VALUES (3, N'Materijal za samostalan rad')
+
+SET IDENTITY_INSERT [dbo].[tipMaterijala] OFF 
+
+GO
+INSERT [dbo].[nameneMaterijala] ([namenaMaterijalaId], [namenaMaterijalaNaziv]) VALUES (1, N'Materijal za ucenike')
+INSERT [dbo].[nameneMaterijala] ([namenaMaterijalaId], [namenaMaterijalaNaziv]) VALUES (2, N'Materijal za profesore')
+GO
+
+
+SET IDENTITY_INSERT [dbo].[predmeti] ON 
+
+INSERT [dbo].[predmeti] ([predmetId], [predmetNaziv], [predmetOpis], [Razred], [tipId]) VALUES (1, N'Prvi ', N'aaaaa', 1, 1)
+INSERT [dbo].[predmeti] ([predmetId], [predmetNaziv], [predmetOpis], [Razred], [tipId]) VALUES (3, N'Globalni', N'asdfasdfasdf', NULL, 2)
+INSERT [dbo].[predmeti] ([predmetId], [predmetNaziv], [predmetOpis], [Razred], [tipId]) VALUES (4, N'aaaa', N'aaaaaaa', 1, 1)
+INSERT [dbo].[predmeti] ([predmetId], [predmetNaziv], [predmetOpis], [Razred], [tipId]) VALUES (5, N'Globalni predmet', N'aaaaa', NULL, 2)
+
+SET IDENTITY_INSERT [dbo].[predmeti] OFF
