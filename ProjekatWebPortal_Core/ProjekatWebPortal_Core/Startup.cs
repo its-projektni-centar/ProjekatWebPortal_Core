@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -7,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Projekat.Models;
 using ProjekatWebPortal_Core.Data;
 using System;
 using System.Collections.Generic;
@@ -46,9 +48,24 @@ namespace ProjekatWebPortal_Core
             
 
             // identity framework core - logovanje, registracija
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddIdentity<AspNetUserCustom, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<UsersMaterijalDbContext>();
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
+
+            //services.AddRazorPages();
+            /*
+                services
+             .AddAuthentication()
+             .AddCookie(options =>
+             {
+                 options.LoginPath = "/login";
+                 options.LogoutPath = "/logout";
+             });*/
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+            services.AddMvcCore(options =>
+            {
+                options.EnableEndpointRouting = false;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,6 +77,7 @@ namespace ProjekatWebPortal_Core
             {
                 app.UseDeveloperExceptionPage();
                 app.UseMigrationsEndPoint();
+
             }
             else
             {
@@ -71,17 +89,21 @@ namespace ProjekatWebPortal_Core
             app.UseStaticFiles();
 
             // Home/Index
-            app.UseRouting();
+            //app.UseRouting();
+
+            app.UseCookiePolicy();
+
 
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
+            app.UseMvc(routes =>
             {
-                endpoints.MapControllerRoute(
+                // endpoints.MapRazorPages();
+                routes.MapRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapRazorPages();
+                    template: "{controller=Home}/{action=Index}/{id?}");
+               
             });
         }
     }

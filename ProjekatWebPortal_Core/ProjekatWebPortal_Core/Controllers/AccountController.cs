@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using ProjekatWebPortal_Core.Models;
 using ProjekatWebPortal_Core.Data;
 using ProjekatWebPortal_Core.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Projekat.Models;
 
 namespace ProjekatWebPortal_Core.Controllers
 {
@@ -13,16 +16,22 @@ namespace ProjekatWebPortal_Core.Controllers
     {
         private UsersMaterijalDbContext _ApplicationDbContext;
 
-        private UsersMaterijalDbContext _usersMaterijalContext; 
+        private UsersMaterijalDbContext _usersMaterijalContext;
 
         /*private IMaterijalContext context;
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;*/
 
-         public AccountController(UsersMaterijalDbContext applicationDbContext, UsersMaterijalDbContext umdbc)
+        private readonly SignInManager<AspNetUserCustom> _signInManager;
+        private readonly UserManager<AspNetUserCustom> _userManager;
+
+
+        public AccountController(UsersMaterijalDbContext applicationDbContext, UsersMaterijalDbContext umdbc, SignInManager<AspNetUserCustom> signInManager, UserManager<AspNetUserCustom> usman)
          {
             _ApplicationDbContext = applicationDbContext;
             _usersMaterijalContext = umdbc;
+            _signInManager = signInManager;
+            _userManager = usman;
          }
         /*
          public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
@@ -58,17 +67,17 @@ namespace ProjekatWebPortal_Core.Controllers
         //
         // GET: /Account/Login
 
-        /*
+        
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
-        */
+        
         //
         // POST: /Account/Login
-        /*
+        
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -79,10 +88,14 @@ namespace ProjekatWebPortal_Core.Controllers
                 return View(model);
             }
 
+            var content = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, false);
+
+            return Content(content.ToString());
+
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, shouldLockout: false);
-            switch (result)
+            //var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, shouldLockout: false);
+            /*switch (result)
             {
                 case SignInStatus.Success:
                     return RedirectToLocal(returnUrl);
@@ -94,9 +107,9 @@ namespace ProjekatWebPortal_Core.Controllers
                 default:
                     ModelState.AddModelError("LoginError", "Neuspesan pokusaj. Pogresna kombinacija, pokusajte ponovo!");
                     return View(model);
-            }
+            }*/
         }
-        */
+        
         /*
         public PartialViewResult LoggedUserData()
         {
@@ -191,13 +204,13 @@ namespace ProjekatWebPortal_Core.Controllers
         {
             RegisterViewModel ViewModel = new RegisterViewModel
             {
-                /*Skole = _ApplicationDbContext.Skola.ToList()/*,
-                Smerovi = context.smerovi.ToList()*/
+                Skole = _usersMaterijalContext.Skola.ToList(),
+                Smerovi = _usersMaterijalContext.Smer.ToList()
             };
             /*
-                MaterijalContext matcont = new MaterijalContext();
-
-                ViewModel.Smerovi = matcont.smerovi.ToList();
+                MaterijalContext matcont = new MaterijalContext();*/
+            /*
+                ViewModel.Smerovi = _usersMaterijalContext.smerovi.ToList();
 
                 if (User.IsInRole("Administrator"))
                 {
@@ -231,7 +244,7 @@ namespace ProjekatWebPortal_Core.Controllers
                     ViewModel.Uloge = matcont.Roles.ToList();
 
                 }*/
-           /* List<Dummy> dummies = _usersMaterijalContext.dummyTabela.ToList();*/
+            /* List<Dummy> dummies = _usersMaterijalContext.dummyTabela.ToList();*/
 
             /*string foo = "";
 
@@ -434,7 +447,7 @@ namespace ProjekatWebPortal_Core.Controllers
                 result[i] = characterArray[value % (uint)characterArray.Length];
             }
             return new string(result);
-        }
+        }*/
         ///////////////////////////////////POST///////////////////////////////////////////////////////////////
         //
         // POST: /Account/Register
@@ -445,12 +458,33 @@ namespace ProjekatWebPortal_Core.Controllers
         /// <param name="Fajl">Slika korisnika. Ako je null, korisniku se dodeljuje default slika.</param>
         /// <returns></returns>
         [HttpPost]
-        [Authorize(Roles = "SuperAdministrator,Administrator")]
+        //[Authorize(Roles = "SuperAdministrator,Administrator")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model, HttpPostedFileBase Fajl)
+        public async Task<ActionResult> Register(RegisterViewModel model/*, HttpPostedFileBase Fajl*/)
         {
+            
+            AspNetUserCustom korisnik = new AspNetUserCustom()
+            {   
+                UserName = "adminko",
+                Email = "MEJJLL",
+                Ime = "IME",
+                Prezime = "PREZIME",
+                SmerId = 1,
+                Uloga = "administrator",
+                PhoneNumber = "123456897"
+                
+            };
 
-            if (ModelState.IsValid)
+        var JUZER = await _userManager.CreateAsync(korisnik, "Sifrasifra#1");
+
+            bool rez = User.IsInRole("administrator");
+
+            return Content(JUZER.ToString() + "\n"+rez.ToString());
+
+            
+
+
+            /*if (ModelState.IsValid)
             {
                 ApplicationUser user;
 
@@ -560,8 +594,9 @@ namespace ProjekatWebPortal_Core.Controllers
             var smeroviPoSkoli = context.smeroviPoSkolama.Where(x => x.skolaId == model.skolaId).Select(x => x.smerId).ToList();
             model.SmeroviPoSkolama = context.smerovi.Where(x => smeroviPoSkoli.Contains(x.smerId)).ToList();
             return View(model);
+            */
         }
-
+        /*
         /// <summary>
         /// Geenerise username za prosledjenok korisnika
         /// </summary>

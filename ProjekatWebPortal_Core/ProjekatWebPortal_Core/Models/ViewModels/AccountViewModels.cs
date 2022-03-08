@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 /*using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;*/
@@ -15,10 +16,10 @@ namespace ProjekatWebPortal_Core.Models
     //    public string Email { get; set; }
     //}
 
-    //public class ExternalLoginListViewModel
-    //{
-    //    public string ReturnUrl { get; set; }
-    //}
+    public class ExternalLoginListViewModel
+    {
+        public string ReturnUrl { get; set; }
+    }
 
     //public class SendCodeViewModel
     //{
@@ -51,29 +52,29 @@ namespace ProjekatWebPortal_Core.Models
     //    public string Email { get; set; }
     //}
 
-    //public class LoginViewModel
-    //{
-        
-    //    [Display(Name = "Korisnicko ime")]
-    //    [Required(ErrorMessage ="Morate uneti korisnicko ime!")]
-    //    public string Username { get; set; }
+    public class LoginViewModel
+    {
 
-    //    [Required(ErrorMessage ="Morate uneti sifru!")]
-    //    [DataType(DataType.Password)]
-    //    [Display(Name = "Password")]
-    //    public string Password { get; set; }
+        [Display(Name = "Korisnicko ime")]
+        [Required(ErrorMessage = "Morate uneti korisnicko ime!")]
+        public string Username { get; set; }
 
-    //    [Display(Name = "zapamti me?")]
-    //    public bool RememberMe { get; set; }
-    //}
+        [Required(ErrorMessage = "Morate uneti sifru!")]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password")]
+        public string Password { get; set; }
+
+        [Display(Name = "zapamti me?")]
+        public bool RememberMe { get; set; }
+    }
 
     public class RegisterViewModel
     {
-        //public IEnumerable<SmerModel> Smerovi { get; set; }
-       // public IEnumerable<IdentityRole> Uloge { get; set; }
+        public IEnumerable<SmerModel> Smerovi { get; set; }
+        public IEnumerable<IdentityRole> Uloge { get; set; }
         public IEnumerable<SkolaModel> Skole { get; set; }
 
-      /*  public IEnumerable<StrucnaSpremaModel> StrucneSpreme { get; set; }
+        public IEnumerable<StrucnaSpremaModel> StrucneSpreme { get; set; }
 
         public List<SmerModel> SmeroviPoSkolama { get; set; }
         public int SelektovanaSkola { get; set; }
@@ -97,7 +98,7 @@ namespace ProjekatWebPortal_Core.Models
         public string Ime { get; set; }
         [Required(ErrorMessage = "Morate uneti prezime!")]
         public string Prezime { get; set; }
-        */
+        
 
         
         
