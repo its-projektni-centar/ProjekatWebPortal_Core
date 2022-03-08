@@ -679,6 +679,4 @@ C:\Users\nikol\Desktop\ProjekatWebPortal_Core\ProjekatWebPortal_Core\ProjekatWeb
 C:\Users\nikol\Desktop\ProjekatWebPortal_Core\ProjekatWebPortal_Core\ProjekatWebPortal_Core\obj\Debug\net5.0\ProjekatWebPortal_Core.pdb
 C:\Users\nikol\Desktop\ProjekatWebPortal_Core\ProjekatWebPortal_Core\ProjekatWebPortal_Core\obj\Debug\net5.0\ProjekatWebPortal_Core.genruntimeconfig.cache
 C:\Users\nikol\Desktop\ProjekatWebPortal_Core\ProjekatWebPortal_Core\ProjekatWebPortal_Core\bin\Debug\net5.0\bundleconfig.json
-C:\Users\nikol\Desktop\ProjekatWebPortal_Core\ProjekatWebPortal_Core\ProjekatWebPortal_Core\bin\Debug\net5.0\dotnet-bundle.dll
-C:\Users\nikol\Desktop\ProjekatWebPortal_Core\ProjekatWebPortal_Core\ProjekatWebPortal_Core\bin\Debug\net5.0\NUglify.dll
 C:\Users\nikol\Desktop\ProjekatWebPortal_Core\ProjekatWebPortal_Core\ProjekatWebPortal_Core\obj\Debug\net5.0\ProjekatWebPortal_Core.csproj.AssemblyReference.cache
