@@ -1,11 +1,15 @@
 ﻿namespace Projekat.Models
 {
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
+    using ProjekatWebPortal_Core.Data;
     using ProjekatWebPortal_Core.Models;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using System.Threading.Tasks;
+
     //--using System.Data.Entity.Spatial;
 
     public class AspNetUserCustom : IdentityUser
@@ -26,6 +30,12 @@
         public string Uloga { get; set; }
 
         public virtual ICollection<Forum_Post> Forum_Post { get; set; }
-        
-    }
+
+
+       
+
 }
+
+    
+}
+

@@ -9,29 +9,31 @@ using ProjekatWebPortal_Core.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Projekat.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Hosting;
+using ProjekatWebPortal_Core.ViewModels;
 
 namespace ProjekatWebPortal_Core.Controllers
 {
     public class AccountController : Controller
     {
-        private UsersMaterijalDbContext _ApplicationDbContext;
-
-        private UsersMaterijalDbContext _usersMaterijalContext;
 
         /*private IMaterijalContext context;
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;*/
 
+        private UsersMaterijalDbContext _usersMaterijalContext;
         private readonly SignInManager<AspNetUserCustom> _signInManager;
         private readonly UserManager<AspNetUserCustom> _userManager;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
 
-        public AccountController(UsersMaterijalDbContext applicationDbContext, UsersMaterijalDbContext umdbc, SignInManager<AspNetUserCustom> signInManager, UserManager<AspNetUserCustom> usman)
+        public AccountController( UsersMaterijalDbContext umdbc, SignInManager<AspNetUserCustom> signInManager, UserManager<AspNetUserCustom> usman, IWebHostEnvironment whe)
          {
-            _ApplicationDbContext = applicationDbContext;
             _usersMaterijalContext = umdbc;
             _signInManager = signInManager;
             _userManager = usman;
+            _webHostEnvironment = whe;
          }
         /*
          public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
@@ -110,10 +112,10 @@ namespace ProjekatWebPortal_Core.Controllers
             }*/
         }
         
-        /*
-        public PartialViewResult LoggedUserData()
+        
+        public async Task<PartialViewResult> LoggedUserData()
         {
-            ApplicationUser user = UserManager.FindByName(this.User.Identity.Name);
+            AspNetUserCustom user = await _userManager.FindByNameAsync(this.User.Identity.Name);
             LoggedUserViewModel lu;
             if (user != null)
             {
@@ -128,7 +130,7 @@ namespace ProjekatWebPortal_Core.Controllers
             this.LogOff();
             return null;
         }
-        */
+        
 
         //
         // GET: /Account/VerifyCode
@@ -177,21 +179,21 @@ namespace ProjekatWebPortal_Core.Controllers
         }
         */
 
-        /*
+        
         public JsonResult GetSmerovi(int skolaID)
         {
             RegisterViewModel viewModel = new RegisterViewModel
             {
-                Skole = context.skole.ToList(),
-                Smerovi = context.smerovi.ToList()
+                Skole = _usersMaterijalContext.Skola.ToList(),
+                Smerovi = _usersMaterijalContext.Smer.ToList()
             };
-            var smeroviPoSkoli = context.smeroviPoSkolama.Where(x => x.skolaId == skolaID).Select(x => x.smerId).ToList();
-            viewModel.SmeroviPoSkolama = context.smerovi.Where(x => smeroviPoSkoli.Contains(x.smerId)).ToList();
+            var smeroviPoSkoli = _usersMaterijalContext.smeroviPoSkolama.Where(x => x.skolaId == skolaID).Select(x => x.smerId).ToList();
+            viewModel.SmeroviPoSkolama = _usersMaterijalContext.Smer.Where(x => smeroviPoSkoli.Contains(x.smerId)).ToList();
 
             var result = new { smerovi = viewModel.SmeroviPoSkolama };
 
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }*/
+            return Json(result/*, JsonRequestBehavior.AllowGet*/);
+        }
         /// <summary>
         /// //////////////////////////////////////////////////////////////////////////
         /// </summary>
@@ -207,53 +209,52 @@ namespace ProjekatWebPortal_Core.Controllers
                 Skole = _usersMaterijalContext.Skola.ToList(),
                 Smerovi = _usersMaterijalContext.Smer.ToList()
             };
-            /*
-                MaterijalContext matcont = new MaterijalContext();*/
-            /*
-                ViewModel.Smerovi = _usersMaterijalContext.smerovi.ToList();
-
-                if (User.IsInRole("Administrator"))
-                {
-                    SkolaModel s = await ApplicationUser.vratiSkoluModel(User.Identity.Name) ?? new SkolaModel { NazivSkole = "Undefined", IdSkole = 0, Skraceno = "Undefined" };
-                    ViewModel.Skole = new List<SkolaModel> { s };
-                    ViewModel.Uloge = matcont.Roles.Where(x => x.Name != "Administrator" && x.Name != "SuperAdministrator").ToList();
-                }
-                else
-                {
-                    //novo
-
-                    try
-                    {
-                        var skId = ViewModel.Skole.ToList()[0].IdSkole;
-                        if (!this.User.IsInRole("SuperAdministrator"))
-                        {
-                            SkolaModel sk = await ApplicationUser.vratiSkoluModel(User.Identity.Name);
-                            if (sk.IdSkole > 0)
-                            {
-                                skId = sk.IdSkole;
-                            }
-                        }
-                        var smeroviPoSkoli = context.smeroviPoSkolama.Where(x => x.skolaId == skId).Select(x => x.smerId).ToList();
-                        ViewModel.SmeroviPoSkolama = context.smerovi.Where(x => smeroviPoSkoli.Contains(x.smerId)).ToList();
-                    }
-                    catch (ArgumentOutOfRangeException) { return new HttpNotFoundResult("Nema unetih smerova"); }
+            
+            
+                ViewModel.Smerovi = _usersMaterijalContext.Smer.ToList();
 
 
-                    //kraj novog
-                    ViewModel.Skole = matcont.Skole.ToList();
-                    ViewModel.Uloge = matcont.Roles.ToList();
-
-                }*/
-            /* List<Dummy> dummies = _usersMaterijalContext.dummyTabela.ToList();*/
-
-            /*string foo = "";
-
-            foreach(var element in dummies)
+            if (User.IsInRole("Administrator"))
             {
-                foo += element.ID + " " + element.Ime + " " + element.Prezime + "\n";
-            }*/
+                    SkolaModel s = await vratiSkolu(User.Identity.Name) ?? new SkolaModel { NazivSkole = "Undefined", IdSkole = 0, Skraceno = "Undefined" };
+                    ViewModel.Skole = new List<SkolaModel> { s };
+                    ViewModel.Uloge = _usersMaterijalContext.Roles.Where(x => x.Name != "Administrator" && x.Name != "SuperAdministrator").ToList();
 
-            return View(/*ViewModel*/);
+                var smeroviPoSkoli = _usersMaterijalContext.smeroviPoSkolama.Where(x => x.skolaId == s.IdSkole).Select(x => x.smerId).ToList();
+                ViewModel.SmeroviPoSkolama = _usersMaterijalContext.Smer.Where(x => smeroviPoSkoli.Contains(x.smerId)).ToList();
+
+            }
+            else
+            {
+
+                //novo
+
+                 try
+                 {
+                     var skId = ViewModel.Skole.ToList()[0].IdSkole;
+                     if (!this.User.IsInRole("SuperAdministrator"))
+                     {
+                         SkolaModel sk = await vratiSkolu(User.Identity.Name);
+                         if (sk.IdSkole > 0)
+                         {
+                             skId = sk.IdSkole;
+                         }
+                     }
+                     var smeroviPoSkoli = _usersMaterijalContext.smeroviPoSkolama.Where(x => x.skolaId == skId).Select(x => x.smerId).ToList();
+                     ViewModel.SmeroviPoSkolama = _usersMaterijalContext.Smer.Where(x => smeroviPoSkoli.Contains(x.smerId)).ToList();
+                 }
+                 catch (ArgumentOutOfRangeException) { return new NotFoundObjectResult("Nema unetih smerova"); }
+
+
+                 //kraj novog
+                 ViewModel.Skole = _usersMaterijalContext.Skola.ToList();
+                 ViewModel.Uloge = _usersMaterijalContext.Roles.ToList();
+
+            }
+
+
+
+            return View(ViewModel);
 
         }
         /// <summary>
@@ -460,35 +461,23 @@ namespace ProjekatWebPortal_Core.Controllers
         [HttpPost]
         //[Authorize(Roles = "SuperAdministrator,Administrator")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model/*, HttpPostedFileBase Fajl*/)
+        public async Task<ActionResult> Register(RegisterViewModel model, IFormFile Fajl)
         {
-            
-            AspNetUserCustom korisnik = new AspNetUserCustom()
-            {   
-                UserName = "adminko",
-                Email = "MEJJLL",
-                Ime = "IME",
-                Prezime = "PREZIME",
-                SmerId = 1,
-                Uloga = "administrator",
-                PhoneNumber = "123456897"
-                
-            };
+            /*string paths = "";
 
-        var JUZER = await _userManager.CreateAsync(korisnik, "Sifrasifra#1");
-
-            bool rez = User.IsInRole("administrator");
-
-            return Content(JUZER.ToString() + "\n"+rez.ToString());
-
-            
+            paths += "Content root path " + _webHostEnvironment.ContentRootPath + "\n";
+            paths += "Content root path " + _webHostEnvironment.WebRootPath + "\n";
+            paths += "Content root path " + _webHostEnvironment.WebRootFileProvider + "\n";
+            paths += "Content root path " + _webHostEnvironment.EnvironmentName + "\n";
 
 
-            /*if (ModelState.IsValid)
+            return Content(paths);*/
+          
+            if (ModelState.IsValid)
             {
-                ApplicationUser user;
+                AspNetUserCustom user;
 
-                user = new ApplicationUser
+                user = new AspNetUserCustom
                 {
                     UserName = model.Ime,
                     Email = model.Email,
@@ -504,9 +493,11 @@ namespace ProjekatWebPortal_Core.Controllers
                 //dodeljivanje skole
                 if (User.IsInRole("Administrator"))
                 {
-                    user.SkolaId = await ApplicationUser.vratiSkolu(User.Identity.Name);
+                    SkolaModel skolaTemp = await vratiSkolu(User.Identity.Name);
+
+                    user.SkolaId = skolaTemp.IdSkole;
                     if (model.selektovanaUloga == "Administrator" || model.selektovanaUloga == "SuperAdministrator")
-                        return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+                        return new StatusCodeResult(403); // forbidden
                 }
                 else
                 {
@@ -528,21 +519,21 @@ namespace ProjekatWebPortal_Core.Controllers
                 //dodeljivanje slike
                 if (Fajl != null)
                 {
-                    user.Slika = new byte[Fajl.ContentLength];
-                    Fajl.InputStream.Read(user.Slika, 0, Fajl.ContentLength);
+                    user.Slika = new byte[Fajl.Length];
+                    Fajl.OpenReadStream().Read(user.Slika, 0, (int)(Fajl.Length));
                 }
                 else
                 {
-                    user.Slika = System.IO.File.ReadAllBytes(Server.MapPath("~/Content/img/Default.png"));
+                    user.Slika = System.IO.File.ReadAllBytes(_webHostEnvironment.WebRootPath + "\\Content\\img\\Default.png");
                 }
                 //Generisanje passworda
-                string password = "123123";
-                var result = await UserManager.CreateAsync(user, password);
+                string password = "Sifrasifra#1";
+                var result = await _userManager.CreateAsync(user, password);
 
 
                 if (result.Succeeded)
                 {
-                    UserManager.AddToRole(user.Id, model.selektovanaUloga);
+                    await _userManager.AddToRoleAsync(user, model.selektovanaUloga);
 
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
@@ -574,50 +565,48 @@ namespace ProjekatWebPortal_Core.Controllers
             }
             // If we got this far, something failed, redisplay form
 
-            MaterijalContext matcont = new MaterijalContext();
 
 
-            model.Smerovi = matcont.smerovi.ToList();
+            model.Smerovi = _usersMaterijalContext.Smer.ToList();
 
             if (User.IsInRole("Administrator"))
             {
                 model.Skole = null;
-                model.Uloge = matcont.Roles.Where(x => x.Name != "Administrator" && x.Name != "SuperAdministrator").ToList();
+                model.Uloge = _usersMaterijalContext.Roles.Where(x => x.Name != "Administrator" && x.Name != "SuperAdministrator").ToList();
             }
             else
             {
-                model.Skole = matcont.Skole.ToList();
-                model.Uloge = matcont.Roles.ToList();
+                model.Skole = _usersMaterijalContext.Skola.ToList();
+                model.Uloge = _usersMaterijalContext.Roles.ToList();
 
             }
 
-            var smeroviPoSkoli = context.smeroviPoSkolama.Where(x => x.skolaId == model.skolaId).Select(x => x.smerId).ToList();
-            model.SmeroviPoSkolama = context.smerovi.Where(x => smeroviPoSkoli.Contains(x.smerId)).ToList();
+            var smeroviPoSkoli = _usersMaterijalContext.smeroviPoSkolama.Where(x => x.skolaId == model.skolaId).Select(x => x.smerId).ToList();
+            model.SmeroviPoSkolama = _usersMaterijalContext.Smer.Where(x => smeroviPoSkoli.Contains(x.smerId)).ToList();
             return View(model);
-            */
+            
         }
-        /*
+        
         /// <summary>
-        /// Geenerise username za prosledjenok korisnika
+        /// Geenerise username za prosledjenog korisnika
         /// </summary>
         /// <param name="user">Korisnik za koga zelimo da generisemo username</param>
-        private void GenerisiUsername(ApplicationUser user)
+        private async void GenerisiUsername(AspNetUserCustom user)
         {
-            ApplicationUser duplikat = null;
-            MaterijalContext context = new MaterijalContext();
+            AspNetUserCustom duplikat = null;
             string username = "";
             if (user.Uloga == "Ucenik")
             {
                 username += user.Ime;
-                username += context.Skole.Where(x => x.IdSkole == user.SkolaId).First().Skraceno;
+                username += _usersMaterijalContext.Skola.Where(x => x.IdSkole == user.SkolaId).First().Skraceno;
                 username += user.GodinaUpisa.ToString().Remove(0, 2);
-                username += context.smerovi.Where(x => x.smerId == user.SmerId).First().smerSkraceno;
+                username += _usersMaterijalContext.Smer.Where(x => x.smerId == user.SmerId).First().smerSkraceno;
                 int id = 1;
                 string usernamesaID;
                 do
                 {
                     usernamesaID = username + id.ToString();
-                    duplikat = UserManager.FindByName(usernamesaID);
+                    duplikat =  await _userManager.FindByNameAsync(usernamesaID);
                     id++;
 
                 }
@@ -628,13 +617,13 @@ namespace ProjekatWebPortal_Core.Controllers
             {
                 username += user.Ime;
                 username += user.Prezime;
-                username += context.Skole.Where(x => x.IdSkole == user.SkolaId).First().Skraceno;
+                username += _usersMaterijalContext.Skola.Where(x => x.IdSkole == user.SkolaId).First().Skraceno;
                 int id = 1;
                 string usernamesaID;
                 do
                 {
                     usernamesaID = username + id.ToString();
-                    duplikat = UserManager.FindByName(usernamesaID);
+                    duplikat = await _userManager.FindByNameAsync(usernamesaID);
                     id++;
 
                 }
@@ -642,7 +631,7 @@ namespace ProjekatWebPortal_Core.Controllers
                 user.UserName = usernamesaID;
             }
         }
-
+        /*
         //
 
         [AllowAnonymous]
@@ -869,17 +858,17 @@ namespace ProjekatWebPortal_Core.Controllers
         //    ViewBag.ReturnUrl = returnUrl;
         //    return View(model);
         //}
-
+        */
         //
         // POST: /Account/LogOff
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
-            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
-
+        /*
         //
         // GET: /Account/ExternalLoginFailure
         //[AllowAnonymous]
@@ -1067,15 +1056,15 @@ namespace ProjekatWebPortal_Core.Controllers
                 return HttpContext.GetOwinContext().Authentication;
             }
         }
-
+        */
         private void AddErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)
             {
-                ModelState.AddModelError("", error);
+                ModelState.AddModelError("", error.Description);
             }
         }
-
+        /*
         private ActionResult RedirectToLocal(string returnUrl)
         {
             if (Url.IsLocalUrl(returnUrl))
@@ -1116,6 +1105,19 @@ namespace ProjekatWebPortal_Core.Controllers
         #endregion
 
         */
+    
+
+        // probati staviti u SkolaModel
+        public  async Task<SkolaModel> vratiSkolu(string username)
+        {
+           
+            AspNetUserCustom user = await _userManager.FindByNameAsync(username);
+            if (user == null)
+                return null;
+            SkolaModel s =  _usersMaterijalContext.Skola.AsQueryable().Where(p => p.IdSkole == user.SkolaId).FirstOrDefault();
+            return s;
+        }
+
     }
 
 }

@@ -1,0 +1,15 @@
+~/Scripts/jquery-3.3.1.js
+~/Scripts/jquery.validate.min.js;
+~/Scripts/bootstrap.js
+~/Scripts/respond.js
+~/Scripts/Materijal/brisanjeMaterijala.js
+~/Scripts/Materijal/filterMaterijal.js
+~/Scripts/Zahtev/zahtevUpgrade.js
+~/Scripts/customDropdown.js
+~/Scripts/Materijal/uploadMaterijal.js
+            ~/Scripts/Materijal/dropdownovi.js
+"~/Scripts/Predmet/editPredmeta.js",
+             "~/Scripts/Predmet/modalOpisPredmet.js",
+             "~/Scripts/Predmet/validacijaEditPredmeta.js",
+             "~/Scripts/Predmet/validacijaNovogPredmeta.js",
+             "~/Scripts/Predmet/smerPoSkoli.js"
