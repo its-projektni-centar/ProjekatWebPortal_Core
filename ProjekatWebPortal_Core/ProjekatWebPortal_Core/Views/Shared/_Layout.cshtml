@@ -100,9 +100,11 @@
 
         <div class="LeftBar">
 
-            @*{Html.renderac("LoggedUserData", "Account");}*@
+            @*{Html.re("LoggedUserData", "Account");}
+            *@
+            @await Component.InvokeAsync("LoggedUserData")
 
-           
+
 
             <!-- Ovde su one levo sto stoje u listi ovo stoji ovde samo da bi mogo da nadjem de pocinje, zato je ovako dugacko -->
             @if (this.User.IsInRole("SuperAdministrator") || User.IsInRole("Administrator"))
@@ -433,6 +435,8 @@
     <script src="~/Scripts/UI/select2.min.js"></script>
     <script src="~/Scripts/UI/sideBarSections.js"></script>
     <script src="~/Scripts/UI/VracanjeID.js"></script>
+
+   
 
     @*<script src="~/Scripts/jquery-1.10.2.intellisense.js"></script>*@
 
