@@ -92,7 +92,7 @@
 
     @if (User.Identity.IsAuthenticated)
     {
-        <div id="hamburger-menu-toggle" class="hamburger-menu-toggle-otvoren">
+        <div id="hamburger-menu-toggle" class="hamburger-menu-toggle-otvoren" style="border: 10px solid green"> <!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
             <div class="bar bar-top"></div>
             <div class="bar bar-middle"></div>
             <div class="bar bar-bottom"></div>
@@ -102,6 +102,7 @@
 
             @*{Html.re("LoggedUserData", "Account");}
             *@
+            <!--KRUZNI PORTAL SA SLIKOM KORISNIKA-->
             @await Component.InvokeAsync("LoggedUserData")
 
 
