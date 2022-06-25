@@ -57,7 +57,7 @@ namespace ProjekatWebPortal_Core.Controllers
 
                     return Redirect("/Razred/RazrediPrikaz/" + System.Uri.UnescapeDataString(pronadjenSmer.smerId.ToString()));
                 else
-                    return new StatusCodeResult(404); // Novo. Zamenjen HttpNotFoundResult
+                    return new StatusCodeResult(404); ///// NOVO!!! ///// Zamenjen HttpNotFoundResult
             }
             var smerPoSk = _usersMaterijalContext.smeroviPoSkolama.Where(x => x.skolaId == id).Select(x => x.smerId).ToList();
             List<SmerModel> smeroviInDb = _usersMaterijalContext.Smer.Where(x => smerPoSk.Contains(x.smerId)).ToList();
