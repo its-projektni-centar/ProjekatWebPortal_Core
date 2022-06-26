@@ -227,7 +227,7 @@ namespace ProjekatWebPortal_Core.Controllers
             predmetiPoSmeru.viewModel.skole = _usersMaterijalContext.Skola.ToList();
             var smerIds = _usersMaterijalContext.smeroviPoSkolama.Where(x => x.skolaId == _usersMaterijalContext.Skola.FirstOrDefault().IdSkole).Select(x => x.smerId).ToList();
             predmetiPoSmeru.viewModel.smerovi = _usersMaterijalContext.Smer.Where(x => smerIds.Contains(x.smerId)).ToList();
-            
+
             return View("PredmetiPrikaz", predmetiPoSmeru);
         }
     }
