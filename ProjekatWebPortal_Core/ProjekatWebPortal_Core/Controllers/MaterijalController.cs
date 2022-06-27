@@ -88,11 +88,18 @@ namespace Projekat.Controllers
                 }
             }
 
-            
 
-           //materijali = naprednaPretraga(formati, tipovi, id, namenaID).ToList();
 
-            return Content("materijali.Count().ToString()");
+            materijali = _usersMaterijalContext.naprednaPretraga(formati, tipovi, id, namenaID).ToList();
+
+            //string contcat = "";
+
+            //foreach (var item in tipovi)
+            //{
+            //    contcat += item.ToString();
+            //}
+
+            return Content(materijali.Count.ToString());
             /*
             if (sort == "opadajuce")
             {
@@ -545,59 +552,7 @@ namespace Projekat.Controllers
 
         }
 
-        IQueryable<OsiromaseniMaterijali> naprednaPretraga(List<string> ekstenzije, List<int> tipoviMaterijalaIds, int? modulId, int namenaID)//Dodati parametre
-        {
-            //IMaterijalContext context = new MaterijalContext();
-            // && (a => tipoviMaterijalaIds.Any(s => a.tipMaterijalaId)
-            if (namenaID == 2)
-            {
-                IQueryable<OsiromaseniMaterijali> materijali2;
-
-                materijali2 = from mat in _usersMaterijalContext.materijali
-                              where mat.namenaMaterijalaId == 2
-                              select new OsiromaseniMaterijali
-                              {
-                                  namenaID = mat.namenaMaterijalaId,
-                                  materijalId = mat.materijalId,
-                                  ekstenzija = mat.materijalEkstenzija,
-                                  materijalNaslov = mat.materijalNaslov,
-                                  materijalOpis = mat.materijalOpis,
-                                  tipMaterijalaId = mat.tipMaterijalId
-                              };
-
-                return materijali2;
-            }
-
-            var queriable = poModulu(modulId);
-            queriable = poNameni(namenaID, queriable);
-
-            if (ekstenzije != null && tipoviMaterijalaIds != null)
-            {
-                queriable = queriable.
-                   Where(a => ekstenzije.Any(s => a.ekstenzija.Contains(s)));
-
-                queriable = queriable.
-                    Where(a => tipoviMaterijalaIds.Any(s => a.tipMaterijalaId.ToString().Contains(s.ToString())));
-
-                return queriable;
-            }
-            else if (ekstenzije == null && tipoviMaterijalaIds != null)
-            {
-                queriable = queriable.
-                Where(a => tipoviMaterijalaIds.Any(s => a.tipMaterijalaId.ToString().Contains(s.ToString())));
-
-                return queriable;
-            }
-            else if (ekstenzije != null && tipoviMaterijalaIds == null)
-            {
-                queriable = queriable.
-                Where(a => ekstenzije.Any(s => a.ekstenzija.Contains(s)));
-
-                return queriable;
-            }
-            else
-                return queriable;
-        }
+        
 
 
         IQueryable<OsiromaseniMaterijali> poModulu(int? modulId)
