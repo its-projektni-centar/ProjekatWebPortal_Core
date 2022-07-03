@@ -34,13 +34,13 @@
                         {
                             <a class="dropdownOpcija" href="#">Obriši</a>
                         }
-                        @*if (this.User.IsInRole("LokalniUrednik") || this.User.IsInRole("Profesor")) ///////////////////////////////////////////// CORE TEMP COMMENT
+                        @if (this.User.IsInRole("LokalniUrednik") || this.User.IsInRole("Profesor"))
                             {
                                 if (!umdbc.PostojiGlobalni(osiromaseni.materijalId))
                                 {
                                     <a class="dropdownOpcija upgrade" href="#">Postavi globalno</a>
                                 }
-                            }*@
+                            }
                         <a class="dropdownOpcija" href="#">Komentariši</a>
                     </div>
                 </div>
@@ -57,10 +57,10 @@
                 @if (this.User.IsInRole("LokalniUrednik") || this.User.IsInRole("Profesor"))
                 {
 
-                    @*if (!context.PostojiGlobalni(osiromaseni.materijalId) && !context.PostojiGlobalniZahtev(osiromaseni.materijalId)) ////////////////////////////// CORE TEMP COMMENT
+                    @if (!umdbc.PostojiGlobalni(osiromaseni.materijalId) && !umdbc.PostojiGlobalniZahtev(osiromaseni.materijalId)) ////////////////////////////// CORE TEMP COMMENT
                         {
                             <a class="upgrade" href="#"><img style="width:12px;" src="~/Content/img/upgradeIco.png" /></a>;
-                        }*@
+                        }
                 }
                 <a class="preuzmi" href="@Url.Action("DownloadMaterijal", "Materijal", new { id = osiromaseni.materijalId })">preuzmi</a>
             </div>

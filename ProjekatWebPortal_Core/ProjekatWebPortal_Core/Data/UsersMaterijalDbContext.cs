@@ -182,6 +182,30 @@ namespace ProjekatWebPortal_Core.Data
             return materijali;
         }
 
+        public bool PostojiGlobalni(int? materijalId)
+        {
+            var globalPredmeti = this.predmeti.Where(x => x.tipId == 2).Select(x => x.predmetId).ToList();
+            var globalModuli = this.moduli.Where(x => globalPredmeti.Contains((int)x.predmetId)).Select(x => x.modulId).ToList();
+
+            List<MaterijalPoModulu> materijalPoModulus = this.materijalPoModulu.Where(x => x.materijalId == materijalId && globalModuli.Contains(x.modulId)).ToList();
+
+            if (materijalPoModulus.Count > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool PostojiGlobalniZahtev(int? materijalId)
+        {
+            var zahtevi = this.globalniZahtevi.Where(x => x.materijalId == materijalId).ToList();
+            if (zahtevi.Count > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
         // TABELE
         public DbSet<MaterijalModel> materijali { get; set; }
 
