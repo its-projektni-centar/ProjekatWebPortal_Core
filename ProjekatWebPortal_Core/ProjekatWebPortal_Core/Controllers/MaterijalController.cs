@@ -11,7 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Projekat.Controllers
+namespace ProjekatWebPortal_Core.Controllers
 {
     /// <summary>
     /// Materijal kontroler

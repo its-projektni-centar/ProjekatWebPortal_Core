@@ -12,7 +12,7 @@
         }
     }
 </style>
-<link href="~/Content/css/ZahtevZaGlobalni.css" />
+<link rel="stylesheet" href="~/Content/css/ZahtevZaGlobalni.css" />
 @if (this.User.IsInRole("SuperAdministrator") || this.User.IsInRole("LokalniUrednik") || this.User.IsInRole("Profesor"))
 {
     <a id="novi-materijal" href="@Url.Action("UploadMaterijal", "Materijal")">
