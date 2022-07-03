@@ -92,38 +92,38 @@ namespace Projekat.Controllers
 
             materijali = _usersMaterijalContext.naprednaPretraga(formati, tipovi, id, namenaID).ToList();
 
-            //string contcat = "";
+            //string contcat = ""; // TESTS
 
             //foreach (var item in tipovi)
             //{
             //    contcat += item.ToString();
             //}
 
-            return Content(materijali.Count.ToString());
-            /*
+            //return Content(materijali.Count.ToString());
+            
             if (sort == "opadajuce")
             {
-                materijali = context.naprednaPretraga(formati, tipovi, id, namenaID).ToList();
+                materijali = _usersMaterijalContext.naprednaPretraga(formati, tipovi, id, namenaID).ToList();
                 materijali.Reverse();
 
                 vm = new MaterijaliNaprednaPretragaViewModel
                 {
                     osiromaseniMaterijali = materijali,
                     naprednaPretragaSelektovani = "",
-                    tipoviMaterijala = umdbc.tipMaterijala.ToList()
+                    tipoviMaterijala = _usersMaterijalContext.tipMaterijala.ToList()
                 };
 
                 return PartialView("_Kartice", vm);
             }
             else if (sort == "rastuce")
             {
-                materijali = context.naprednaPretraga(formati, tipovi, id, namenaID).ToList();
+                materijali = _usersMaterijalContext.naprednaPretraga(formati, tipovi, id, namenaID).ToList();
 
                 vm = new MaterijaliNaprednaPretragaViewModel
                 {
                     osiromaseniMaterijali = materijali,
                     naprednaPretragaSelektovani = "",
-                    tipoviMaterijala = context.tipMaterijala.ToList()
+                    tipoviMaterijala = _usersMaterijalContext.tipMaterijala.ToList()
                 };
                 return PartialView("_Kartice", vm);
             }
@@ -132,7 +132,7 @@ namespace Projekat.Controllers
             {
                 osiromaseniMaterijali = materijali,
                 naprednaPretragaSelektovani = "",
-                tipoviMaterijala = context.tipMaterijala.ToList()
+                tipoviMaterijala = _usersMaterijalContext.tipMaterijala.ToList()
             };
 
             if (sort != null && tipovi.Count != 0)
@@ -140,7 +140,7 @@ namespace Projekat.Controllers
                 return View("_Kartice", vm);
             }
 
-            return View("MaterijaliPrikaz", vm);*/
+            return View("MaterijaliPrikaz", vm);
         }
 
         //public JsonResult GetSmerovi(int skolaID)

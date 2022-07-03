@@ -80,36 +80,55 @@ namespace ProjekatWebPortal_Core.Data
             var queriable = poModulu(modulId);
             queriable = poNameni(namenaID, queriable);
 
+            Console.WriteLine(ekstenzije.Count);
+            Console.WriteLine(tipoviMaterijalaIds.Count);
+
+
             //if (ekstenzije != null && tipoviMaterijalaIds != null) //////////////////////////////////////////EXCEPTION
-            //{
-            //    queriable = queriable.
-            //       Where(a => ekstenzije.Any(s => a.ekstenzija.Contains(s)));
+            if (ekstenzije.Count > 0 && tipoviMaterijalaIds.Count > 0)
+            {
+                queriable = queriable.
+                   Where(a => ekstenzije.Any(s => a.ekstenzija.Contains(s)));
 
-            //    queriable = queriable.
-            //        Where(a => tipoviMaterijalaIds.Any(s => a.tipMaterijalaId.ToString().Contains(s.ToString())));
+                queriable = queriable.
+                    Where(a => tipoviMaterijalaIds.Any(s => a.tipMaterijalaId.ToString().Contains(s.ToString())));
 
-            //    return queriable;
-            //}
-            //else
-            if (ekstenzije == null && tipoviMaterijalaIds != null)
+                Console.WriteLine("naprednaPretraga 1");
+
+
+                return queriable;
+            }
+ //           else if (ekstenzije == null && tipoviMaterijalaIds != null)
+            else if (ekstenzije.Count == 0 && tipoviMaterijalaIds.Count > 0)
+
             {
                 queriable = queriable.
                 Where(a => tipoviMaterijalaIds.Any(s => a.tipMaterijalaId.ToString().Contains(s.ToString())));
 
+                Console.WriteLine("naprednaPretraga 2");
+
                 return queriable;
             }
-            else if (ekstenzije != null && tipoviMaterijalaIds == null)
+            // else if (ekstenzije != null && tipoviMaterijalaIds == null)
+            else if (ekstenzije.Count > 0 && tipoviMaterijalaIds.Count == 0)
             {
                 queriable = queriable.
                 Where(a => ekstenzije.Any(s => a.ekstenzija.Contains(s)));
 
+                Console.WriteLine("naprednaPretraga 3");
+
+
                 return queriable;
             }
             else
+            {
+                Console.WriteLine("naprednaPretraga 4");
+
                 return queriable;
+            }
         }
 
-        IQueryable<OsiromaseniMaterijali> poModulu(int? modulId) // OK
+            IQueryable<OsiromaseniMaterijali> poModulu(int? modulId) // OK
         {
             // TEST MODUL@!
 
@@ -120,7 +139,7 @@ namespace ProjekatWebPortal_Core.Data
                          {
                              namenaID = mat.namenaMaterijalaId,
                              materijalId = mat.materijalId,
-                             ekstenzija = mat.materijalId.ToString(),
+                             ekstenzija = mat.materijalId.ToString(), 
                              materijalNaslov = mat.materijalNaslov,
                              materijalOpis = mat.materijalOpis,
                              tipMaterijalaId = mat.tipMaterijalId
