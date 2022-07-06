@@ -117,9 +117,12 @@ namespace ProjekatWebPortal_Core.Controllers
             try
             {
                 int pID = _usersMaterijalContext.predmeti.Where(x => x.predmetId == id).FirstOrDefault().predmetId;
+                Console.WriteLine("HIUAAA " + pID);
                 if (pID != 0)
                 {
                     moduli = _usersMaterijalContext.moduli.Where(x => x.predmetId == pID).ToList();
+
+                    Console.WriteLine("BROJ MODULA JE "+moduli.Count);
                     return View(moduli);
                 }
             }
