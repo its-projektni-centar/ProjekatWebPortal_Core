@@ -6,61 +6,39 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Web Portal</title>
 
 
-    @*<title>@ViewBag.Title - Web Portal</title>
-
-        @Styles.Render("~/Content/css")
-
-        @Styles.Render("~/Content/css/select2.min.css")
-        @Styles.Render("~/Content/css/select2izgled.css")
-        @Styles.Render("~/Content/css/simplebar.css")
-    *@
-    
-    
-    
 
     @*
         ////// Optimizacija, kasnije, mozda
         <link href="@Url.Content("~/Content/css")" rel="stylesheet" />
     *@
 
+    @*
+        @Styles.Render("~/Content/css")
+    *@
+    <link rel="stylesheet" href="~/Content/css/reset.css" />
+    <link rel="stylesheet" href="~/Content/css/bootstrap-flatly.css" />
+    <link rel="stylesheet" href="~/Content/css/Site.css" />
+    <link rel="stylesheet" href="~/Content/css/datatables.min.css" />
+    <link rel="stylesheet" href="~/Content/css/izgled.css" />
+    <link rel="stylesheet" href="~/Content/css/stil.css" />
+    <link rel="stylesheet" href="/Content/css/simplebar.css" />
+    <link rel="stylesheet" href="~/Content/css/detaljiKorisnika.css" />
+    <link rel="stylesheet" href="~/Content/css/izmeniKorisnika.css" />
+    <link rel="stylesheet" href="~/Content/css/naprednaPretraga.css" />
+    <link rel="stylesheet" href="~/Content/css/UrednikOdgovor.css" />
 
-    
-        <link rel="stylesheet" href="~/Content/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/Content/css/bootstrap-flatly.css" />
+    @*
+        @Styles.Render("~/Content/css/select2.min.css")
+        @Styles.Render("~/Content/css/select2izgled.css")
+        @Styles.Render("~/Content/css/simplebar.css")
+    *@
 
-        <link rel="stylesheet" href="~/Content/css/datatables.min.css" />
-        <link rel="stylesheet" href="~/Content/css/detaljiKorisnika.css" />
-        <link rel="stylesheet" href="~/Content/css/ForumStyles.css" />
-
-        <link rel="stylesheet" href="~/Content/css/izgled.css" />
-        <link rel="stylesheet" href="~/Content/css/izmeniKorisnika.css" />
-
-        <link rel="stylesheet" href="~/Content/css/listaKorisnikaStil.css" />
-        <link rel="stylesheet" href="~/Content/css/ModalnaSredjivanje.css" />
-        <link rel="stylesheet" href="~/Content/css/naprednaPretraga.css" />
-        <link rel="stylesheet" href="~/Content/css/Register.css" />
-        <link rel="stylesheet" href="~/Content/css/reset.css" />
-        <link rel="stylesheet" href="~/Content/css/Site.css" />
-        <link rel="stylesheet" href="~/Content/css/stil.css" />
-        <link rel="stylesheet" href="~/Content/css/TabelaListaKorisnika.css" />
-        <link rel="stylesheet" href="~/Content/css/UrednikOdgovor.css" />
-        <link rel="stylesheet" href="~/Content/css/ZahtevZaGlobalni.css" />
-
-        <link rel="stylesheet" href="/Content/css/select2.min.css" />
-        <link rel="stylesheet" href="/Content/css/select2izgled.css" />
-        <link rel="stylesheet" href="/Content/css/simplebar.css" />
-
-
-        <link rel="stylesheet" href="/Content/css/select2.min.css" />
-        <link rel="stylesheet" href="/Content/css/select2izgled.css" />
-        <link rel="stylesheet" href="/Content/css/simplebar.css" />
-
-    
-
-
-
+    <link rel="stylesheet" href="/Content/css/select2.min.css" />
+    <link rel="stylesheet" href="/Content/css/select2izgled.css" />
+    <link rel="stylesheet" href="/Content/css/simplebar.css" />
 
     <script src="https://unpkg.com/simplebar@latest/dist/simplebar.js"></script>
     @*CDN za simplebar*@
@@ -528,11 +506,6 @@
     *@
 
     @RenderBody()
-
-    <hr />
-    <footer>
-        <p>&copy; @DateTime.Now.Year - Web Portal</p>
-    </footer>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
