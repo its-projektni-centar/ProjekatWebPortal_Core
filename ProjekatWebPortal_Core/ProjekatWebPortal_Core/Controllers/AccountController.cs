@@ -32,7 +32,7 @@ namespace ProjekatWebPortal_Core.Controllers
          {
             _usersMaterijalContext = umdbc;
             _signInManager = signInManager;
-            _userManager = usman;
+            _userManager = usman; 
             _webHostEnvironment = whe;
          }
         /*
@@ -896,6 +896,8 @@ namespace ProjekatWebPortal_Core.Controllers
 
             base.Dispose(disposing);
         }
+
+        */
         /// <summary>
         /// Vraca listu korisnika, sa mogucnoscu pretrage
         /// </summary>
@@ -904,31 +906,31 @@ namespace ProjekatWebPortal_Core.Controllers
         [Authorize(Roles = "SuperAdministrator,Administrator")]
         public async Task<ActionResult> ListaKorisnika(ListaNaprednaPretragaViewModel vm)
         {
-            MaterijalContext context = new MaterijalContext();
+            //MaterijalContext context = new MaterijalContext();
             ListaNaprednaPretragaViewModel ViewModel = new ListaNaprednaPretragaViewModel();
-            List<SkolaModel> skole = context.Skole.ToList();
-            List<SmerModel> smerovi = context.smerovi.ToList();
+            List<SkolaModel> skole = _usersMaterijalContext.Skola.ToList();
+            List<SmerModel> smerovi = _usersMaterijalContext.Smer.ToList();
 
             ViewModel.Smerovi = smerovi.ToList();
 
             ViewModel.Korisnici = new List<ListaKorisnikaViewModel>();
             List<ListaKorisnikaViewModel> lista = new List<ListaKorisnikaViewModel>();
-            List<ApplicationUser> useri;
+            List<AspNetUserCustom> useri;
             int? skolaId;
 
 
             if (User.IsInRole("SuperAdministrator"))
             {
-                useri = context.Users.ToList();
-                ViewModel.Uloge = context.Roles.ToList();
+                useri = _usersMaterijalContext.Users.ToList();
+                ViewModel.Uloge = _usersMaterijalContext.Roles.ToList();
                 ViewModel.Skole = skole.ToList();
             }
             else
             {
-                skolaId = context.Users.FirstOrDefault(x => x.UserName == User.Identity.Name)?.SkolaId;
-                useri = context.Users.Where(x => x.SkolaId == skolaId && x.Uloga != "Administrator" && x.Uloga != "SuperAdministrator").ToList();
-                ViewModel.Uloge = context.Roles.Where(x => x.Name != "Administrator" && x.Name != "SuperAdministrator").ToList();
-                SkolaModel skola = await ApplicationUser.vratiSkoluModel(User.Identity.Name);
+                skolaId = _usersMaterijalContext.Users.FirstOrDefault(x => x.UserName == User.Identity.Name)?.SkolaId;
+                useri = _usersMaterijalContext.Users.Where(x => x.SkolaId == skolaId && x.Uloga != "Administrator" && x.Uloga != "SuperAdministrator").ToList();
+                ViewModel.Uloge = _usersMaterijalContext.Roles.Where(x => x.Name != "Administrator" && x.Name != "SuperAdministrator").ToList();
+                SkolaModel skola = await vratiSkolu(User.Identity.Name);
                 ViewModel.Skole = new List<SkolaModel> { skola };
 
             }
@@ -946,7 +948,7 @@ namespace ProjekatWebPortal_Core.Controllers
             }
 
             #region dodavanje
-            foreach (ApplicationUser a in useri)
+            foreach (AspNetUserCustom a in useri)
             {
                 SkolaModel s = skole.FirstOrDefault(x => x.IdSkole == a.SkolaId);
                 SmerModel sm = smerovi.FirstOrDefault(c => c.smerId == a.SmerId);
@@ -988,6 +990,8 @@ namespace ProjekatWebPortal_Core.Controllers
 
             return View(ViewModel);
         }
+
+        /*
         /// <summary>
         /// Vraca view sa detaljima korisnika
         /// </summary>
@@ -1117,6 +1121,16 @@ namespace ProjekatWebPortal_Core.Controllers
             SkolaModel s =  _usersMaterijalContext.Skola.AsQueryable().Where(p => p.IdSkole == user.SkolaId).FirstOrDefault();
             return s;
         }
+
+        //public async Task<SkolaModel> vratiSkoluModel(string username)
+        //{
+        //    MaterijalContext context = new MaterijalContext();
+        //    ApplicationUser user = await context.Users.FirstOrDefaultAsync(x => x.UserName == username);
+        //    if (user == null)
+        //        return null;
+        //    SkolaModel s = await context.Skole.FirstOrDefaultAsync(c => c.IdSkole == user.SkolaId);
+        //    return s;
+        //}
 
     }
 
