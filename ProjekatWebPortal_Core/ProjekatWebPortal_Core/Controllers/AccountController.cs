@@ -459,7 +459,7 @@ namespace ProjekatWebPortal_Core.Controllers
         /// <param name="Fajl">Slika korisnika. Ako je null, korisniku se dodeljuje default slika.</param>
         /// <returns></returns>
         [HttpPost]
-        //[Authorize(Roles = "SuperAdministrator,Administrator")]
+        [Authorize(Roles = "SuperAdministrator,Administrator")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model, IFormFile Fajl)
         {

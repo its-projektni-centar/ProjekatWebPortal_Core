@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Projekat.Models;
@@ -248,76 +249,85 @@ namespace ProjekatWebPortal_Core.Controllers
         //    return Json(res, JsonRequestBehavior.AllowGet);
         //}
 
-        ////kod ove akcije treba dodati punjenje tabele namena materijala
-        ///// <summary>
-        ///// Vraca view na kome je forma za dodavanje predmeta
-        ///// </summary>
-        ///// <param name="smerId">Id smera za koji je predmet koji se dodaje.</param>
-        ///// <returns></returns>
-        //[HttpGet]
-        //[Authorize(Roles = "SuperAdministrator,LokalniUrednik,Profesor")]
-        //public async Task<ActionResult> UploadMaterijal()
-        //{
-        //    context = new MaterijalContext();
+        //kod ove akcije treba dodati punjenje tabele namena materijala
+        /// <summary>
+        /// Vraca view na kome je forma za dodavanje predmeta
+        /// </summary>
+        /// <param name="smerId">Id smera za koji je predmet koji se dodaje.</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Authorize(Roles = "SuperAdministrator,LokalniUrednik,Profesor")]
+        public async Task<ActionResult> UploadMaterijal()
+        {
+            MaterijalUploadViewModel viewModel = new MaterijalUploadViewModel
+            {
+                tipoviMaterijala = _usersMaterijalContext.tipMaterijala.ToList(),
+                nameneMaterijala = _usersMaterijalContext.nameneMaterijala.ToList(),
+                skole = _usersMaterijalContext.Skola.ToList(),
+                Smerovi = _usersMaterijalContext.Smer.ToList(),
+                Predmeti = _usersMaterijalContext.predmeti.ToList(),
+                Moduli = _usersMaterijalContext.moduli.ToList()
+            };
 
-        //    MaterijalUploadViewModel viewModel = new MaterijalUploadViewModel
-        //    {
-        //        tipoviMaterijala = context.tipMaterijala.ToList(),
-        //        nameneMaterijala = context.nameneMaterijala.ToList(),
-        //        skole = context.skole.ToList(),
-        //        Smerovi = context.smerovi.ToList(),
-        //        Predmeti = context.predmeti.ToList(),
-        //        Moduli = context.moduli.ToList()
-        //    };
+            Console.WriteLine(viewModel.tipoviMaterijala.Count());
+            Console.WriteLine(viewModel.nameneMaterijala.Count());
+            Console.WriteLine(viewModel.skole.Count());
+            Console.WriteLine(viewModel.Smerovi.Count());
+            Console.WriteLine(viewModel.Predmeti.Count());
+            Console.WriteLine(viewModel.Moduli.Count());
 
-        //    try
-        //    {
-        //        var skId = viewModel.skole.ToList()[0].IdSkole;
-        //        if (!this.User.IsInRole("SuperAdministrator"))
-        //        {
-        //            SkolaModel sk = await ApplicationUser.vratiSkoluModel(User.Identity.Name);
-        //            if (sk.IdSkole > 0)
-        //            {
-        //                skId = sk.IdSkole;
-        //            }
-        //        }
-        //        var smeroviPoSkoli = context.smeroviPoSkolama.Where(x => x.skolaId == skId).Select(x => x.smerId).ToList();
-        //        viewModel.SmeroviPoSkolama = context.smerovi.Where(x => smeroviPoSkoli.Contains(x.smerId)).ToList();
-        //        int id = viewModel.SmeroviPoSkolama.First().smerId;
-        //        var predmetiposmeru = context.predmetiPoSmeru.Where(x => x.smerId == id).Select(c => c.predmetId).ToList();
-        //        viewModel.PredmetPoSmeru = viewModel.Predmeti.Where(x => predmetiposmeru.Contains(x.predmetId)).ToList();
 
-        //        int idP = viewModel.PredmetPoSmeru.FirstOrDefault().predmetId;
 
-        //        viewModel.ModulPoPredmetu = context.moduli.Where(x => x.predmetId == idP).ToList();
+            try
+            {
+                var skId = viewModel.skole.ToList()[0].IdSkole;
+                if (!this.User.IsInRole("SuperAdministrator"))
+                {
+                    SkolaModel sk = await vratiSkolu(User.Identity.Name);
+                    if (sk.IdSkole > 0)
+                    {
+                        skId = sk.IdSkole;
+                    }
+                }
+                var smeroviPoSkoli = _usersMaterijalContext.smeroviPoSkolama.Where(x => x.skolaId == skId).Select(x => x.smerId).ToList();
 
-        //        if (TempData["SuccMsg"] != null) { ViewBag.SuccMsg = TempData["SuccMsg"]; }
+                Console.WriteLine(smeroviPoSkoli);
 
-        //        return View("UploadMaterijal", viewModel);
-        //    }
-        //    catch (ArgumentOutOfRangeException) { return new HttpNotFoundResult("Nema unetih smerova"); }
-        //}
+                viewModel.SmeroviPoSkolama = _usersMaterijalContext.Smer.Where(x => smeroviPoSkoli.Contains(x.smerId)).ToList();
+                int id = viewModel.SmeroviPoSkolama.First().smerId;
+                var predmetiposmeru = _usersMaterijalContext.predmetiPoSmeru.Where(x => x.smerId == id).Select(c => c.predmetId).ToList();
+                viewModel.PredmetPoSmeru = viewModel.Predmeti.Where(x => predmetiposmeru.Contains(x.predmetId)).ToList();
 
-        ////kod ove akcije treba dodati punjenje tabele namena materijala
-        ///// <summary>
-        ///// Dodaje materijal u bazu
-        ///// </summary>
-        ///// <param name="materijal">Materijal model.</param>
-        ///// <param name="file">Uploadovani fajl.</param>
-        ///// <param name="predmet">Predmet za koji je materijal.</param>
-        ///// <returns></returns>
+                int idP = viewModel.PredmetPoSmeru.FirstOrDefault().predmetId;
+
+                viewModel.ModulPoPredmetu = _usersMaterijalContext.moduli.Where(x => x.predmetId == idP).ToList();
+
+                if (TempData["SuccMsg"] != null) { ViewBag.SuccMsg = TempData["SuccMsg"]; }
+
+                return View("UploadMaterijal", viewModel);
+            }
+            catch (ArgumentOutOfRangeException) { return NotFound("Nema unetih smerova"); }
+        }
+
+        //kod ove akcije treba dodati punjenje tabele namena materijala
+        /// <summary>
+        /// Dodaje materijal u bazu
+        /// </summary>
+        /// <param name="materijal">Materijal model.</param>
+        /// <param name="file">Uploadovani fajl.</param>
+        /// <param name="predmet">Predmet za koji je materijal.</param>
+        /// <returns></returns>
         //[HttpPost]
         //[Authorize(Roles = "SuperAdministrator,LokalniUrednik,Profesor")]
-        //public ActionResult UploadMaterijal(MaterijalModel materijal, HttpPostedFileBase file, int modulId, string idUser, string odobreno)
+        //public ActionResult UploadMaterijal(MaterijalModel materijal, IFormFile file, int modulId, string idUser, string odobreno)
         //{
         //    // PredmetModel predmet = new PredmetModel();
         //    //materijal.modulId = modulId;
 
-        //    context = new MaterijalContext();
 
         //    if (materijal.namenaMaterijalaId != 2)
         //    {
-        //        context.Add<MaterijalPoModulu>(new MaterijalPoModulu
+        //        _usersMaterijalContext.Add<MaterijalPoModulu>(new MaterijalPoModulu
         //        {
         //            modulId = modulId,
         //            materijalId = materijal.materijalId
@@ -347,8 +357,8 @@ namespace ProjekatWebPortal_Core.Controllers
         //            materijal.materijalNaslov = materijal.materijalNaslov;
         //            materijal.Obrisan = false;
 
-        //            context.Add<MaterijalModel>(materijal);
-        //            context.SaveChanges();
+        //            _usersMaterijalContext.Add<MaterijalModel>(materijal);
+        //            _usersMaterijalContext.SaveChanges();
         //        }
 
         //        TempData["SuccMsg"] = "Uspešno ste postavili materijal!";
@@ -605,6 +615,16 @@ namespace ProjekatWebPortal_Core.Controllers
             });
 
             return materijali;
+        }
+
+        public async Task<SkolaModel> vratiSkolu(string username)
+        {
+
+            AspNetUserCustom user = await _userManager.FindByNameAsync(username);
+            if (user == null)
+                return null;
+            SkolaModel s = _usersMaterijalContext.Skola.AsQueryable().Where(p => p.IdSkole == user.SkolaId).FirstOrDefault();
+            return s;
         }
     }
 }
