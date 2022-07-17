@@ -90,29 +90,50 @@ namespace ProjekatWebPortal_Core.Controllers
                 return View(model);
             }
 
-            var content = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, false);
+            var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, false);
 
-            return Content(content.ToString());
+            // return Content(content.ToString());
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             //var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, shouldLockout: false);
-            /*switch (result)
+
+            if (result.Succeeded)
             {
-                case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-                case SignInStatus.Failure:
-                default:
-                    ModelState.AddModelError("LoginError", "Neuspesan pokusaj. Pogresna kombinacija, pokusajte ponovo!");
-                    return View(model);
-            }*/
+                return Redirect(returnUrl);
+            }
+            else if(result.IsLockedOut)
+            {
+                return View("Lockout");
+            }
+            //else if(result.verific ??????)
+            else if(!result.Succeeded)
+            {
+                ModelState.AddModelError("LoginError", "Neuspesan pokusaj. Pogresna kombinacija, pokusajte ponovo!");
+                return View(model);
+            }
+            else
+            {
+                ModelState.AddModelError("LoginError", "Neuspesan pokusaj. Pogresna kombinacija, pokusajte ponovo!");
+                return View(model);
+            }
+
+            //switcresulth (result)
+            //{
+            //    case SignInSta:
+            //        return RedirectToLocal(returnUrl);
+            //    case SignInStatus.LockedOut:
+            //        return View("Lockout");
+            //    case SignInStatus.RequiresVerification:
+            //        return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+            //    case SignInStatus.Failure:
+            //    default:
+            //        ModelState.AddModelError("LoginError", "Neuspesan pokusaj. Pogresna kombinacija, pokusajte ponovo!");
+            //        return View(model);
+            //}
         }
-        
-        
+
+
         public async Task<PartialViewResult> LoggedUserData()
         {
             AspNetUserCustom user = await _userManager.FindByNameAsync(this.User.Identity.Name);
