@@ -267,6 +267,7 @@ namespace ProjekatWebPortal_Core.Controllers
                 Smerovi = _usersMaterijalContext.Smer.ToList(),
                 Predmeti = _usersMaterijalContext.predmeti.ToList(),
                 Moduli = _usersMaterijalContext.moduli.ToList()
+                
             };
 
             Console.WriteLine(viewModel.tipoviMaterijala.Count());
@@ -295,7 +296,11 @@ namespace ProjekatWebPortal_Core.Controllers
 
                 viewModel.SmeroviPoSkolama = _usersMaterijalContext.Smer.Where(x => smeroviPoSkoli.Contains(x.smerId)).ToList();
                 int id = viewModel.SmeroviPoSkolama.First().smerId;
+                Console.WriteLine("SMER JE: " + id.ToString());
                 var predmetiposmeru = _usersMaterijalContext.predmetiPoSmeru.Where(x => x.smerId == id).Select(c => c.predmetId).ToList();
+
+                // MORA DA POSTOJI BAREM 1 PREDMET PO SMERU!!!!
+                Console.WriteLine("Broj rpedmeta po smeru je: " + predmetiposmeru.Count());
                 viewModel.PredmetPoSmeru = viewModel.Predmeti.Where(x => predmetiposmeru.Contains(x.predmetId)).ToList();
 
                 int idP = viewModel.PredmetPoSmeru.FirstOrDefault().predmetId;
@@ -317,64 +322,66 @@ namespace ProjekatWebPortal_Core.Controllers
         /// <param name="file">Uploadovani fajl.</param>
         /// <param name="predmet">Predmet za koji je materijal.</param>
         /// <returns></returns>
-        //[HttpPost]
-        //[Authorize(Roles = "SuperAdministrator,LokalniUrednik,Profesor")]
-        //public ActionResult UploadMaterijal(MaterijalModel materijal, IFormFile file, int modulId, string idUser, string odobreno)
-        //{
-        //    // PredmetModel predmet = new PredmetModel();
-        //    //materijal.modulId = modulId;
+        [HttpPost]
+        [Authorize(Roles = "SuperAdministrator,LokalniUrednik,Profesor")]
+        public ActionResult UploadMaterijal(MaterijalModel materijal, IFormFile file, int modulId, string idUser, string odobreno)
+        {
+            // PredmetModel predmet = new PredmetModel();
+            //materijal.modulId = modulId;
 
 
-        //    if (materijal.namenaMaterijalaId != 2)
-        //    {
-        //        _usersMaterijalContext.Add<MaterijalPoModulu>(new MaterijalPoModulu
-        //        {
-        //            modulId = modulId,
-        //            materijalId = materijal.materijalId
-        //        });
-        //    }
-        //    if (idUser != null)
-        //    {
-        //        materijal.idUser = idUser;
-        //    }
-        //    if (odobreno != null)
-        //    {
-        //        materijal.odobreno = odobreno;
-        //    }
-        //    if (ModelState.IsValid)
-        //    {
-        //        if (file != null)
-        //        {
-        //            string nazivFajla = Path.GetFileName(file.FileName);
+            if (materijal.namenaMaterijalaId != 2)
+            {
+                _usersMaterijalContext.Add<MaterijalPoModulu>(new MaterijalPoModulu
+                {
+                    modulId = modulId,
+                    materijalId = materijal.materijalId
+                });
+            }
+            if (idUser != null)
+            {
+                materijal.idUser = idUser;
+            }
+            if (odobreno != null)
+            {
+                materijal.odobreno = odobreno;
+            }
+            if (ModelState.IsValid)
+            {
+                if (file != null)
+                {
+                    string nazivFajla = Path.GetFileName(file.FileName);
 
-        //            materijal.datumMaterijali = DateTime.Now;
-        //            materijal.fileMimeType = file.ContentType;
-        //            materijal.materijalFile = new byte[file.ContentLength];
-        //            file.InputStream.Read(materijal.materijalFile, 0, file.ContentLength);
-        //            materijal.materijalNaziv = nazivFajla;
-        //            materijal.materijalEkstenzija = Path.GetExtension(nazivFajla);
-        //            materijal.materijalOpis = materijal.materijalOpis;
-        //            materijal.materijalNaslov = materijal.materijalNaslov;
-        //            materijal.Obrisan = false;
+                    materijal.datumMaterijali = DateTime.Now;
+                    materijal.fileMimeType = file.ContentType;
+                    materijal.materijalFile = new byte[file.Length];
+                    file.OpenReadStream().Read(materijal.materijalFile, 0, (int)(file.Length));
 
-        //            _usersMaterijalContext.Add<MaterijalModel>(materijal);
-        //            _usersMaterijalContext.SaveChanges();
-        //        }
+                   // file.InputStream.Read(materijal.materijalFile, 0, file.ContentLength);
+                    materijal.materijalNaziv = nazivFajla;
+                    materijal.materijalEkstenzija = Path.GetExtension(nazivFajla);
+                    materijal.materijalOpis = materijal.materijalOpis;
+                    materijal.materijalNaslov = materijal.materijalNaslov;
+                    materijal.Obrisan = false;
 
-        //        TempData["SuccMsg"] = "Uspešno ste postavili materijal!";
-        //        //ViewBag.Message = "Uspešno ste postavili materijal!";
-        //        return RedirectToAction("UploadMaterijal", "Materijal");
-        //        // return View("UploadMaterijal", ViewModel);
-        //    }
-        //    else
-        //    {
-        //        ViewBag.Message = "Postavljanje materijala nije uspelo!";
-        //        //TempData["ErrorMsg"] = "Postavljanje materijala nije uspelo!";
-        //        return RedirectToAction("UploadMaterijal", "Materijal");
+                    _usersMaterijalContext.Add<MaterijalModel>(materijal);
+                    _usersMaterijalContext.SaveChanges();
+                }
 
-        //        // return View("UploadMaterijal", ViewModel);
-        //    }
-        //}
+                TempData["SuccMsg"] = "Uspešno ste postavili materijal!";
+                //ViewBag.Message = "Uspešno ste postavili materijal!";
+                return RedirectToAction("UploadMaterijal", "Materijal");
+                // return View("UploadMaterijal", ViewModel);
+            }
+            else
+            {
+                ViewBag.Message = "Postavljanje materijala nije uspelo!";
+                //TempData["ErrorMsg"] = "Postavljanje materijala nije uspelo!";
+                return RedirectToAction("UploadMaterijal", "Materijal");
+
+                // return View("UploadMaterijal", ViewModel);
+            }
+        }
 
         //[HttpGet]
         //[Authorize(Roles = "SuperAdministrator,LokalniUrednik")]

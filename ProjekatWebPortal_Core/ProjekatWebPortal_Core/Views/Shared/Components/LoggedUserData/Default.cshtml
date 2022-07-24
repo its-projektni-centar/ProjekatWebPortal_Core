@@ -1,29 +1,30 @@
 ﻿@model ProjekatWebPortal_Core.ViewModels.LoggedUserViewModel
 @if (Model != null)
 {
-<div id="CrveniFiksni"></div>
+    <div id="CrveniFiksni"></div>
 
-<div id="Crveni">
+    <div id="Crveni">
 
-    @if(Model.slika != null){
+        @if (Model.slika != null)
+        {
 
-    <img id="slikakor" src='data:image;base64,@System.Convert.ToBase64String(Model.slika)' onerror="this.onerror=null;this.src=this.alt;console.log('ALT IMAGE')" alt="~/Content/img/Default.png" class="slika" style="height:160px !important; width:160px !important" />
-    }
-    else
-    {
-    <img id="slikakor" src="~/Content/img/Default.png" class="slika" style="height:160px !important; width:160px !important" />
+            <img id="slikakor" src='data:image;base64,@System.Convert.ToBase64String(Model.slika)' onerror="this.onerror=null;this.src=this.alt;console.log('ALT IMAGE')" alt="~/Content/img/Default.png" class="slika" style="height:160px !important; width:160px !important" />
+        }
+        else
+        {
+            <img id="slikakor" src="~/Content/img/Default.png" class="slika" style="height:160px !important; width:160px !important" />
 
-    }
-</div>
+        }
+    </div>
 
-<br />
-<br />
-<!-- Reseno -->
-<p id="Ime1"> @Model.Username</p>
-
-
-<p id="uloga1">
+    <br />
+    <br />
+    <!-- Reseno -->
+    <p id="Ime1"> @Model.Username</p>
 
 
-    @Model.Role
-</p>}
+    <p id="uloga1">
+
+
+        @Model.Role
+    </p>}

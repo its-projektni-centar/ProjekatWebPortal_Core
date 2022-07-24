@@ -83,7 +83,7 @@ namespace ProjekatWebPortal_Core.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
+        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl = "/")
         {
             if (!ModelState.IsValid)
             {
@@ -102,7 +102,7 @@ namespace ProjekatWebPortal_Core.Controllers
             {
                 return Redirect(returnUrl);
             }
-            else if(result.IsLockedOut)
+            else if (result.IsLockedOut)
             {
                 return View("Lockout");
             }
@@ -1142,17 +1142,5 @@ namespace ProjekatWebPortal_Core.Controllers
             SkolaModel s =  _usersMaterijalContext.Skola.AsQueryable().Where(p => p.IdSkole == user.SkolaId).FirstOrDefault();
             return s;
         }
-
-        //public async Task<SkolaModel> vratiSkoluModel(string username)
-        //{
-        //    MaterijalContext context = new MaterijalContext();
-        //    ApplicationUser user = await context.Users.FirstOrDefaultAsync(x => x.UserName == username);
-        //    if (user == null)
-        //        return null;
-        //    SkolaModel s = await context.Skole.FirstOrDefaultAsync(c => c.IdSkole == user.SkolaId);
-        //    return s;
-        //}
-
     }
-
 }
